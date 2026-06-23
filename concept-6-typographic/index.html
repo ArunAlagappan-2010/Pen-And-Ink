@@ -3,201 +3,190 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MERIDIAN — Concept 6 · Typographic</title>
+<title>Vishkar Interiors — Type</title>
 <style>
   :root{
-    --ink:#111110; --bg:#f0ede4; --accent:#d6176b; --line:#111110; --muted:#6b685e;
-    --sans:'Helvetica Neue','Arial',sans-serif;
+    --ink:#000000; --soft:#666666; --line:#e2e2e2; --bg:#ffffff;
+    --sans:'Helvetica Neue','SF Pro Display','Arial',sans-serif;
     --mono:'SF Mono','JetBrains Mono','Consolas',monospace;
   }
-  body.dark{--ink:#f0ede4;--bg:#111110;--line:#f0ede4;--muted:#9a978c}
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
-  body{font-family:var(--sans);color:var(--ink);background:var(--bg);line-height:1.5;-webkit-font-smoothing:antialiased;transition:background .4s,color .4s}
+  body{font-family:var(--sans);color:var(--ink);background:var(--bg);line-height:1.5;-webkit-font-smoothing:antialiased}
   a{color:inherit;text-decoration:none}
   img{display:block;width:100%;height:auto}
 
-  /* cursor dot */
-  .cursor{position:fixed;width:14px;height:14px;border-radius:50%;background:var(--accent);pointer-events:none;z-index:300;transform:translate(-50%,-50%);transition:transform .12s ease;mix-blend-mode:difference}
-  @media(hover:none){.cursor{display:none}}
+  /* LOADER */
+  .loader{position:fixed;inset:0;z-index:9999;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;transition:opacity .7s,visibility .7s}
+  .loader.done{opacity:0;visibility:hidden}
+  .loader .mk{text-align:center;opacity:0;transform:translateY(10px);animation:lin .9s cubic-bezier(.16,1,.3,1) .1s forwards}
+  .loader .mk b{font-size:clamp(28px,5vw,46px);font-weight:800;letter-spacing:-.02em;color:#fff}
+  .loader .mk span{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.4em;color:#888;margin-top:12px;padding-left:.4em}
+  .loader .ln{width:180px;height:2px;background:#333;overflow:hidden}
+  .loader .ln i{display:block;height:100%;width:0;background:#fff;animation:lfill 1.3s ease forwards}
+  @keyframes lin{to{opacity:1;transform:none}}@keyframes lfill{to{width:100%}}
 
-  .nav{display:flex;justify-content:space-between;align-items:center;padding:22px 36px;border-bottom:2px solid var(--line);position:sticky;top:0;background:var(--bg);z-index:100}
-  .brand{font-weight:800;font-size:18px;letter-spacing:.02em}
-  .nav .r{display:flex;gap:24px;align-items:center;font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.06em}
-  .nav a:hover{color:var(--accent)}
-  .toggle{font-family:var(--mono);font-size:11px;text-transform:uppercase;border:1.5px solid var(--line);padding:6px 12px;cursor:pointer;background:none;color:inherit}
-  .toggle:hover{background:var(--ink);color:var(--bg)}
+  /* NAV underline-dropdowns */
+  .nav{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:2px solid var(--ink)}
+  .nav .bar{display:flex;align-items:center;justify-content:space-between;padding:18px 36px}
+  .brand{font-weight:800;font-size:19px;letter-spacing:-.01em}
+  .brand span{font-family:var(--mono);font-weight:400;font-size:11px;letter-spacing:.2em;color:var(--soft);margin-left:8px}
+  .menu{display:flex;gap:26px;list-style:none}
+  .menu>li>a{font-size:14px;font-weight:500;padding:6px 0;position:relative}
+  .menu>li>a::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:0;background:var(--ink);transition:width .25s}
+  .menu>li:hover>a::after{width:100%}
+  .book{background:var(--ink);color:#fff;padding:10px 20px;font-size:13px;font-weight:600;letter-spacing:.02em}
+  .book:hover{background:#222}
+  .burger{display:none;background:none;border:none;font-size:24px}
+  /* dropdown panel full-width */
+  .panel{display:none;border-top:1px solid var(--line);background:var(--bg)}
+  .panel.show{display:block}
+  .panel .pin{max-width:1280px;margin:0 auto;padding:26px 36px;display:flex;gap:50px;flex-wrap:wrap}
+  .panel a{font-size:22px;font-weight:700;letter-spacing:-.01em;color:var(--ink);transition:color .2s}
+  .panel a:hover{color:var(--soft)}
 
-  /* hero */
-  .hero{padding:70px 36px 0}
-  .hero .meta{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);border-bottom:1.5px solid var(--line);padding-bottom:16px}
-  .giant{font-weight:800;letter-spacing:-.045em;line-height:.84;font-size:clamp(64px,18vw,280px);margin-top:24px}
-  .giant .o{color:transparent;-webkit-text-stroke:2px var(--ink)}
-  .giant .ac{color:var(--accent)}
-  .hero .foot{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:24px;margin-top:30px;padding-bottom:46px}
-  .hero .foot p{max-width:38ch;font-size:18px}
-  .hero .foot .ar{font-family:var(--mono);font-size:13px;color:var(--muted)}
+  /* HERO big type */
+  .hero{padding:80px 36px 50px;border-bottom:2px solid var(--ink)}
+  .hero .meta{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--soft);border-bottom:1px solid var(--line);padding-bottom:16px}
+  .hero h1{font-size:clamp(48px,11vw,150px);font-weight:800;letter-spacing:-.045em;line-height:.9;margin-top:28px}
+  .hero .foot{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:24px;margin-top:30px}
+  .hero .foot p{max-width:40ch;font-size:18px}
+  .hero .foot .book{font-size:15px;padding:14px 26px}
 
-  /* marquee */
-  .marquee{border-top:2px solid var(--line);border-bottom:2px solid var(--line);overflow:hidden;white-space:nowrap;background:var(--accent);color:#fff}
-  .marquee .track{display:inline-block;padding:16px 0;animation:scroll 26s linear infinite;font-weight:800;font-size:30px;letter-spacing:-.02em;text-transform:uppercase}
-  .marquee .track span{padding:0 26px}
-  @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  /* image row */
+  .irow{display:grid;grid-template-columns:2fr 1fr;border-bottom:2px solid var(--ink)}
+  .irow .im{overflow:hidden;border-right:2px solid var(--ink)}
+  .irow .im img{height:100%;min-height:380px;object-fit:cover;filter:grayscale(1) contrast(1.05)}
+  .irow .side{padding:46px 36px;display:flex;flex-direction:column;justify-content:center}
+  .irow .side .k{font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--soft);margin-bottom:16px}
+  .irow .side h2{font-size:clamp(26px,3.4vw,40px);font-weight:800;letter-spacing:-.02em;line-height:1.05}
+  .irow .side p{margin-top:14px;color:var(--soft);font-size:15px}
 
-  /* image strip */
-  .strip{border-bottom:2px solid var(--line)}
-  .strip img{height:64vh;min-height:380px;object-fit:cover;filter:grayscale(.25) contrast(1.06)}
-  body.dark .strip img{filter:grayscale(.4) contrast(1.1) brightness(.85)}
+  /* services list big */
+  .svc{padding:80px 36px;border-bottom:2px solid var(--ink)}
+  .svc .lab{font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--soft);margin-bottom:22px}
+  .svc .li{display:flex;justify-content:space-between;align-items:baseline;padding:22px 0;border-top:1px solid var(--line);font-size:clamp(26px,5vw,56px);font-weight:800;letter-spacing:-.03em;transition:padding-left .25s}
+  .svc .li:last-child{border-bottom:1px solid var(--line)}
+  .svc .li:hover{padding-left:16px}
+  .svc .li .x{font-family:var(--mono);font-size:13px;font-weight:400;color:var(--soft)}
 
-  /* manifesto */
-  .rows{border-bottom:2px solid var(--line)}
-  .mrow{display:grid;grid-template-columns:130px 1fr;gap:30px;padding:56px 36px;border-bottom:1.5px solid var(--line);align-items:start}
-  .mrow:last-child{border-bottom:none}
-  .mrow .no{font-family:var(--mono);font-size:13px;color:var(--accent);padding-top:10px}
-  .mrow h2{font-size:clamp(28px,5vw,60px);font-weight:800;letter-spacing:-.03em;line-height:1.0}
-  .mrow p{margin-top:14px;max-width:52ch;color:var(--muted);font-size:17px}
+  /* portfolio strip */
+  .pf{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:2px solid var(--ink)}
+  .pf .c{border-right:1px solid var(--line);position:relative;overflow:hidden}
+  .pf .c:last-child{border-right:none}
+  .pf .c img{aspect-ratio:4/5;object-fit:cover;filter:grayscale(1);transition:filter .4s,transform .8s cubic-bezier(.16,1,.3,1)}
+  .pf .c:hover img{filter:grayscale(0);transform:scale(1.03)}
+  .pf .c .t{position:absolute;left:0;bottom:0;padding:16px;font-weight:700;color:#fff;background:linear-gradient(0deg,rgba(0,0,0,.5),transparent);width:100%}
 
-  /* project list with skew hover */
-  .plist{padding:80px 36px;border-bottom:2px solid var(--line)}
-  .plist .lab{font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:24px}
-  .plist .pl{display:flex;justify-content:space-between;align-items:baseline;padding:22px 0;border-top:1.5px solid var(--line);
-             font-size:clamp(24px,5vw,52px);font-weight:800;letter-spacing:-.025em;transition:transform .25s,color .25s;transform-origin:left}
-  .plist .pl:last-child{border-bottom:1.5px solid var(--line)}
-  .plist .pl:hover{transform:skewX(-7deg) translateX(14px);color:var(--accent)}
-  .plist .pl .yr{font-family:var(--mono);font-size:14px;font-weight:400;color:var(--muted)}
+  /* BOOK */
+  .book-sec{padding:90px 36px;border-bottom:2px solid var(--ink)}
+  .book-sec .grid{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:start}
+  .book-sec h2{font-size:clamp(40px,8vw,100px);font-weight:800;letter-spacing:-.04em;line-height:.92}
+  .book-sec .lead p{margin-top:18px;color:var(--soft);font-size:17px;max-width:34ch}
+  form{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  form .full{grid-column:1/3}
+  label{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--soft);margin-bottom:6px}
+  input,select,textarea{width:100%;font-family:inherit;font-size:15px;padding:13px;border:1px solid var(--ink);background:#fff;color:var(--ink)}
+  input:focus,select:focus,textarea:focus{outline:none;box-shadow:inset 0 0 0 1px var(--ink)}
+  textarea{min-height:80px;resize:vertical}
+  button.sb{grid-column:1/3;background:var(--ink);color:#fff;border:none;padding:16px;font-size:15px;font-weight:600;letter-spacing:.02em;cursor:pointer}
+  button.sb:hover{background:#222}.ok{grid-column:1/3;color:#1c7a3a;font-size:14px;min-height:18px}
 
-  /* color block stats */
-  .blocks{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:2px solid var(--line)}
-  .blocks>div{padding:60px 30px;border-right:1.5px solid var(--line)}
-  .blocks>div:last-child{border-right:none}
-  .blocks>div:nth-child(2){background:var(--accent);color:#fff}
-  .blocks .n{font-size:clamp(48px,7vw,96px);font-weight:800;letter-spacing:-.04em;line-height:1}
-  .blocks .l{font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.05em;margin-top:12px}
-
-  /* services */
-  .serv{padding:80px 36px;border-bottom:2px solid var(--line)}
-  .serv .lab{font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:30px}
-  .serv .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5px;background:var(--line);border:1.5px solid var(--line)}
-  .serv .grid>div{background:var(--bg);padding:34px;transition:background .25s,color .25s}
-  .serv .grid>div:hover{background:var(--ink);color:var(--bg)}
-  .serv .grid h3{font-size:26px;font-weight:800;letter-spacing:-.02em}
-  .serv .grid p{margin-top:10px;font-size:15px;color:var(--muted)}
-  .serv .grid>div:hover p{color:var(--bg)}
-
-  /* similar */
-  .similar{padding:70px 36px;border-bottom:2px solid var(--line)}
-  .similar .lab{font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:24px}
-  .similar .row{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5px;background:var(--line);border:1.5px solid var(--line)}
-  .similar a{background:var(--bg);padding:26px;transition:background .25s,color .25s}
-  .similar a:hover{background:var(--accent);color:#fff}
-  .similar .nm{font-size:21px;font-weight:800;letter-spacing:-.01em}
-  .similar .ds{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:10px}
-  .similar a:hover .ds{color:rgba(255,255,255,.85)}
-  .similar .go{font-family:var(--mono);font-size:12px;margin-top:12px}
-
-  .cta{padding:120px 36px;text-align:center}
-  .cta h2{font-size:clamp(48px,12vw,170px);font-weight:800;letter-spacing:-.045em;line-height:.86}
-  .cta a{display:inline-block;margin-top:34px;font-family:var(--mono);font-size:13px;text-transform:uppercase;letter-spacing:.08em;border:2px solid var(--line);padding:16px 28px;transition:background .2s,color .2s}
-  .cta a:hover{background:var(--accent);border-color:var(--accent);color:#fff}
-  footer{border-top:2px solid var(--line);padding:28px 36px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+  footer{padding:26px 36px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--soft)}
 
   .reveal{opacity:0;transform:translateY(16px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}
   .reveal.in{opacity:1;transform:none}
 
-  @media(max-width:860px){
-    .nav,.hero,.plist,.serv,.similar,.cta,footer{padding-left:20px;padding-right:20px}
-    .mrow{grid-template-columns:1fr;gap:10px;padding:38px 20px}.mrow .no{padding-top:0}
-    .blocks{grid-template-columns:1fr}.blocks>div{border-right:none;border-bottom:1.5px solid var(--line)}
-    .serv .grid,.similar .row{grid-template-columns:1fr}
-    .nav .r{gap:14px}
+  @media(max-width:920px){
+    .menu,.nav .bar .book{display:none}.burger{display:block}
+    .irow{grid-template-columns:1fr}.irow .im{border-right:none;border-bottom:2px solid var(--ink)}
+    .pf{grid-template-columns:1fr}
+    .book-sec .grid{grid-template-columns:1fr;gap:30px}
+    form{grid-template-columns:1fr}form .full,button.sb,.ok{grid-column:1}
   }
 </style>
 </head>
 <body>
-  <div class="cursor" id="cursor"></div>
-  <nav class="nav">
-    <div class="brand">MERIDIAN</div>
-    <div class="r"><a href="#ethos">Ethos</a><a href="#work">Work</a><a href="#contact">Contact</a><button class="toggle" id="toggle">Invert</button></div>
+  <div class="loader" id="loader"><div class="mk"><b>VISHKAR</b><span>INTERIORS</span></div><div class="ln"><i></i></div></div>
+  <nav class="nav" id="nav">
+    <div class="bar">
+      <div class="brand">VISHKAR<span>INTERIORS</span></div>
+      <ul class="menu">
+        <li data-p="about"><a href="#about">About Us</a></li>
+        <li data-p="services"><a href="#services">Services</a></li>
+        <li data-p="work"><a href="#work">Our Portfolio</a></li>
+        <li data-p="office"><a href="#office">Office</a></li>
+        <li><a href="#careers">Careers</a></li>
+        <li><a href="#book">Contact Us</a></li>
+      </ul>
+      <a class="book" href="#book">Book a Consultation</a>
+      <button class="burger">≡</button>
+    </div>
+    <div class="panel" id="panel"><div class="pin" id="pin"></div></div>
   </nav>
 
   <header class="hero">
-    <div class="meta reveal"><span>Construction / Architecture</span><span>Est. 1984</span><span>National</span><span>[N 52.20]</span></div>
-    <div class="giant reveal">WE<br>BUILD<br><span class="ac">F</span><span class="o">O</span>RM.</div>
-    <div class="foot"><p class="reveal">A design-and-build practice for people who want one team accountable for the whole building — from first drawing to final handover.</p><div class="ar reveal">[ Scroll ↓ ]</div></div>
+    <div class="meta reveal"><span>Interior Design Studio</span><span>Est. 2011</span><span>Homes &amp; Workplaces</span><span>[ Book ↓ ]</span></div>
+    <h1 class="reveal">WE MAKE<br>ROOMS<br>FEEL RIGHT.</h1>
+    <div class="foot"><p class="reveal">Vishkar is an interior design studio working in black, white and everything quiet in between. Start with a consultation.</p><a class="book reveal" href="#book">Book a Consultation</a></div>
   </header>
 
-  <!-- MARQUEE -->
-  <div class="marquee"><div class="track"><span>CONCRETE</span>·<span>TIMBER</span>·<span>STEEL</span>·<span>GLASS</span>·<span>ON TIME</span>·<span>ON BUDGET</span>·<span>CONCRETE</span>·<span>TIMBER</span>·<span>STEEL</span>·<span>GLASS</span>·<span>ON TIME</span>·<span>ON BUDGET</span>·</div></div>
-
-  <div class="strip reveal"><img src="../assets/concrete-1.jpg" alt="Raw concrete structure"></div>
-
-  <!-- MANIFESTO -->
-  <section class="rows" id="ethos">
-    <div class="mrow reveal"><div class="no">01 / ETHOS</div><div><h2>Material honesty.</h2><p>We leave structure visible. Concrete reads as concrete, timber as timber — nothing dressed up to be something it isn't.</p></div></div>
-    <div class="mrow reveal"><div class="no">02 / ETHOS</div><div><h2>One team, start to finish.</h2><p>The architects who draw your building are on site when it's poured. Accountability never changes hands.</p></div></div>
-    <div class="mrow reveal"><div class="no">03 / ETHOS</div><div><h2>On the date we promise.</h2><p>Ninety-eight percent of our projects complete on schedule. We plan the build before we sign the contract.</p></div></div>
+  <section class="irow" id="about">
+    <div class="im reveal"><img src="../assets/v-minimal-1.jpg" alt="A minimal interior"></div>
+    <div class="side"><div class="k reveal">About Us</div><h2 class="reveal">Restraint is the whole point.</h2><p class="reveal">We strip a space back to what matters: light, proportion and a few honest materials. Then we stop.</p></div>
   </section>
 
-  <!-- PROJECT LIST -->
-  <section class="plist" id="work">
-    <div class="lab reveal">Selected work — 06 of 320</div>
-    <div class="pl reveal"><span>HOLLOWELL HOUSE</span><span class="yr">2023 / RES</span></div>
-    <div class="pl reveal"><span>QUAY STREET WORKSHOPS</span><span class="yr">2022 / WORK</span></div>
-    <div class="pl reveal"><span>ST. BRIDE PAVILION</span><span class="yr">2021 / CIVIC</span></div>
-    <div class="pl reveal"><span>NORTHGATE TERRACES</span><span class="yr">2019 / RES</span></div>
-    <div class="pl reveal"><span>THE READING ROOMS</span><span class="yr">2017 / CIVIC</span></div>
-    <div class="pl reveal"><span>MARKET HALL</span><span class="yr">2018 / CIVIC</span></div>
+  <section class="svc" id="services">
+    <div class="lab reveal">Services</div>
+    <a class="li reveal" href="#book"><span>RESIDENTIAL</span><span class="x">Homes &amp; apartments</span></a>
+    <a class="li reveal" href="#book"><span>COMMERCIAL</span><span class="x">Offices &amp; retail</span></a>
+    <a class="li reveal" href="#book"><span>STYLING</span><span class="x">The finishing layer</span></a>
+    <a class="li reveal" href="#book"><span>RENOVATION</span><span class="x">End to end</span></a>
   </section>
 
-  <!-- BLOCKS -->
-  <section class="blocks">
-    <div class="reveal"><div class="n" data-count="40">0</div><div class="l">Years building</div></div>
-    <div class="reveal"><div class="n" data-count="320" data-suffix="+">0</div><div class="l">Projects delivered</div></div>
-    <div class="reveal"><div class="n" data-count="98" data-suffix="%">0</div><div class="l">On schedule</div></div>
+  <section class="pf" id="work">
+    <div class="c reveal"><img src="../assets/v-living-2.jpg" alt="Living"><div class="t">Eastgate · Living</div></div>
+    <div class="c reveal"><img src="../assets/v-kitchen-2.jpg" alt="Kitchen"><div class="t">Marlow · Kitchen</div></div>
+    <div class="c reveal"><img src="../assets/v-bedroom-2.jpg" alt="Bedroom"><div class="t">Linen · Bedroom</div></div>
   </section>
 
-  <!-- SERVICES -->
-  <section class="serv">
-    <div class="lab reveal">What we do — under one roof</div>
+  <section class="book-sec" id="book">
     <div class="grid">
-      <div class="reveal"><h3>ARCHITECTURE</h3><p>Concept to detailed design, led by chartered architects in-house.</p></div>
-      <div class="reveal"><h3>CONSTRUCTION</h3><p>Self-delivered builds with directly-employed site teams.</p></div>
-      <div class="reveal"><h3>PROJECT MGMT</h3><p>Fixed budgets, fixed dates, reporting you can actually read.</p></div>
-      <div class="reveal"><h3>INTERIORS</h3><p>Joinery, lighting and finishes detailed to the last millimetre.</p></div>
+      <div class="lead"><h2 class="reveal">BOOK A CONSULT.</h2><p class="reveal">One conversation is all it takes to start. We reply within one business day.</p></div>
+      <form id="bf" class="reveal">
+        <div><label>Name</label><input required placeholder="Your name"></div>
+        <div><label>Email</label><input type="email" required placeholder="you@email.com"></div>
+        <div><label>Service</label><select><option>Residential</option><option>Commercial</option><option>Styling</option><option>Renovation</option></select></div>
+        <div><label>Preferred date</label><input type="date"></div>
+        <div class="full"><label>Project</label><textarea placeholder="A few words..."></textarea></div>
+        <button class="sb" type="submit">Request consultation</button>
+        <div class="ok" id="ok"></div>
+      </form>
     </div>
   </section>
 
-  <!-- SIMILAR -->
-  <section class="similar">
-    <div class="lab reveal">Bold sites we rate</div>
-    <div class="row">
-      <a class="reveal" href="https://www.oma.com" target="_blank" rel="noopener"><div class="nm">OMA</div><div class="ds">Raw, bold, unapologetically structural.</div><div class="go">oma.com ↗</div></a>
-      <a class="reveal" href="https://dsrny.com" target="_blank" rel="noopener"><div class="nm">Diller Scofidio + Renfro</div><div class="ds">Experimental, type-forward, high contrast.</div><div class="go">dsrny.com ↗</div></a>
-      <a class="reveal" href="https://www.adjaye.com" target="_blank" rel="noopener"><div class="nm">Adjaye Associates</div><div class="ds">Bold, sculptural, confident identity.</div><div class="go">adjaye.com ↗</div></a>
-    </div>
-  </section>
-
-  <section class="cta" id="contact">
-    <h2 class="reveal">LET'S<br>BUILD.</h2>
-    <a class="reveal" href="mailto:hello@meridian-build.com">hello@meridian-build.com ↗</a>
-  </section>
-
-  <footer>
-    <div>MERIDIAN © 2026</div><div>Construction &amp; Architecture</div><div>+1 (000) 000-0000</div>
-  </footer>
+  <footer id="office"><span id="careers">Vishkar Interiors © 2026</span><span>studio@vishkar.com</span><span>Careers · Visit Us</span></footer>
 
 <script>
-  const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.14});
+  const hideLoader=()=>document.getElementById('loader').classList.add('done');
+  window.addEventListener('load',()=>setTimeout(hideLoader,950));setTimeout(hideLoader,2600);
+  // underline dropdown panel
+  const panels={
+    about:['Our Story','The Team','Press & Awards'],
+    services:['Residential','Commercial','Styling','Renovation'],
+    work:['Living Spaces','Kitchens','Bedrooms','Workspaces'],
+    office:['The Studio','Visit Us']
+  };
+  const panel=document.getElementById('panel'),pin=document.getElementById('pin'),nav=document.getElementById('nav');let pt;
+  document.querySelectorAll('.menu>li[data-p]').forEach(li=>{
+    li.addEventListener('mouseenter',()=>{clearTimeout(pt);pin.innerHTML=panels[li.dataset.p].map(x=>`<a href="#${li.dataset.p}">${x}</a>`).join('');panel.classList.add('show');});
+    li.addEventListener('mouseleave',()=>pt=setTimeout(()=>panel.classList.remove('show'),160));
+  });
+  panel.addEventListener('mouseenter',()=>clearTimeout(pt));
+  panel.addEventListener('mouseleave',()=>pt=setTimeout(()=>panel.classList.remove('show'),160));
+  const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-  // count up
-  const cio=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){const el=e.target.querySelector('[data-count]');if(el&&!el.dataset.done){el.dataset.done=1;const t=+el.dataset.count,suf=el.dataset.suffix||'';let c=0,st=Math.max(1,Math.round(t/45));(function tk(){c=Math.min(t,c+st);el.textContent=c+suf;if(c<t)requestAnimationFrame(tk);})();}cio.unobserve(e.target);}})},{threshold:.5});
-  document.querySelectorAll('.blocks>div').forEach(d=>cio.observe(d));
-  // theme toggle
-  document.getElementById('toggle').addEventListener('click',()=>document.body.classList.toggle('dark'));
-  // cursor follow
-  const cur=document.getElementById('cursor');
-  addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';});
-  document.querySelectorAll('a,button,.pl').forEach(el=>{el.addEventListener('mouseenter',()=>cur.style.transform='translate(-50%,-50%) scale(2.6)');el.addEventListener('mouseleave',()=>cur.style.transform='translate(-50%,-50%) scale(1)');});
+  document.getElementById('bf').addEventListener('submit',e=>{e.preventDefault();document.getElementById('ok').textContent='Thank you — we’ll confirm within one business day.';e.target.querySelectorAll('input,textarea').forEach(i=>i.value='');});
 </script>
 </body>
 </html>

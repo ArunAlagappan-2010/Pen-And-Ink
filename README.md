@@ -1,35 +1,39 @@
-# MERIDIAN — Website Concepts
+# Vishkar Interiors — Website Concepts
 
-Six **distinct, full-scale** website directions for a **construction & architecture** company,
-built to a simple, clean, image-led brief (in the spirit of apple.com) — now with a little
-tasteful interactivity. Each concept is a different layout *and* a different behaviour, and
-every page links out to real, live sites in the same spirit.
+Six **distinct** website directions for **Vishkar Interiors**, an interior-design studio.
+Brief: minimal, black-and-white, inspired by apple.com, **sleek dropdown navigation**, minimal
+copy, a **custom logo loading screen**, and **booking a consultation** as the primary action.
 
-**Start here:** open [`index.html`](index.html) — a gallery that links to every concept, grouped
-by category, with a master list of reference sites at the bottom.
+**Start here:** open [`index.html`](index.html) — a gallery linking every concept, grouped by
+tone, with a shortlist of well-known reference studios.
 
 ## The six concepts
 
-| # | Concept | Direction | What makes it different |
-|---|---------|-----------|--------------------------|
-| 01 | [Product Story](concept-1-product/index.html) | Apple scrollytelling | Sticky pinned "how we build" sequence, parallax hero, count-up stats, bento services |
-| 02 | [The Journal](concept-2-editorial/index.html) | Magazine | Masthead, multi-column long-read with drop cap, journal grid, interview, reading-progress bar, newsletter |
-| 03 | [Structured Index](concept-3-swiss-grid/index.html) | Technical document | Visible engineering grid, capability matrix, animated process timeline, numbered register, live clock |
-| 04 | [Cinematic (Dark)](concept-4-cinematic/index.html) | Immersive | Fullscreen pinned scenes, ken-burns zooms, drag-to-scroll project reel |
-| 05 | [Studio Portfolio](concept-5-studio/index.html) | Work-first | Filterable project grid (Residential/Civic/Workplace), click-to-open lightbox, team, live availability dot |
-| 06 | [Bold Typographic](concept-6-typographic/index.html) | Brutalist | Oversized type, scrolling marquee, skew-on-hover list, light/dark invert toggle, custom cursor |
+| # | Concept | Tone | Signature pattern |
+|---|---------|------|-------------------|
+| 01 | [Atelier](concept-1-product/index.html) | Pure white | Apple-centered, flyout dropdowns, count-up stats, full booking form |
+| 02 | [Editorial](concept-2-editorial/index.html) | Ivory | Split-screen: sticky side-rail with inline expanding dropdowns + serif |
+| 03 | [Dark Luxe](concept-3-swiss-grid/index.html) | Charcoal | Gallery-led with a full-width **mega-menu** (thumbnails) |
+| 04 | [Gallery](concept-4-cinematic/index.html) | Warm grey | Portfolio-first masonry with a **live category filter** |
+| 05 | [Immersive](concept-5-studio/index.html) | Photographic | Fullscreen **auto-rotating room slider**, nav solidifies on scroll |
+| 06 | [Type](concept-6-typographic/index.html) | High-contrast B&W | Oversized type, **underline-reveal dropdown panels** |
 
-## Interactivity ("a little bit of dynamics")
+## Shared across all six (per the brief)
 
-Deliberately restrained — nothing that fights the minimalist brief:
-scroll-reveals, count-up statistics, a sticky scrollytelling sequence, a horizontal drag reel,
-a live category filter + lightbox, an animated timeline, a marquee, and a theme-invert toggle.
+- **Black & white**, Apple-minimal, deliberately sparse copy.
+- **Custom logo loading screen** — the Vishkar wordmark animates in, then fades to the page.
+- **Sleek dropdown navigation** with all six menus: About Us · Services · Our Portfolio ·
+  Office · Careers · Contact Us — each concept implements the dropdown differently.
+- **Booking-led** — a persistent "Book a Consultation" CTA and a working booking form
+  (name, email, service, preferred date, message) that confirms on submit. Most sections
+  funnel toward it.
+- Light, restrained motion (scroll reveals only) and full mobile responsiveness.
 
 ## Notes
 
-- Each concept is a **self-contained HTML file** — no build step, no framework. Just open it.
-- **MERIDIAN** is a placeholder brand used across all concepts so you compare *layout*, not content.
-- Photography is from Unsplash (free to use), downloaded into [`assets/`](assets/) so the pages
-  work offline. Replace with the client's real project photography later.
-- Each concept page links to 3 real "similar sites"; a full master list with rationale is in
+- Each concept is a **self-contained HTML file** — no build step. Just open it.
+- Photography is from Unsplash (free to use), in [`assets/`](assets/) (`v-*.jpg`), so pages
+  work offline. Replace with Vishkar's real project photography later.
+- **Vishkar Interiors** branding and placeholder copy throughout; supply real content later.
+- Each concept and the gallery link out to well-known interior studios; full list in
   [`references.md`](references.md).
