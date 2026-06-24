@@ -3,7 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vishkar Interiors — Snap Deck</title>
+<title>Pen and Ink — Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
 <style>
   :root{
     --ink:#0c0c0c; --soft:#6f6f6f; --line:#e7e7e7; --bg:#ffffff; --pearl:#f4f3f1;
@@ -15,18 +17,26 @@
   a{color:inherit;text-decoration:none}
   img{display:block;width:100%;height:auto}
 
-  /* LOADER — counter on dark */
-  .loader{position:fixed;inset:0;z-index:9999;background:#0c0c0c;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .7s,visibility .7s}
+  /* LOADER — Pen and Ink logo reveal */
+  .loader{position:fixed;inset:0;z-index:9999;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:52px;transition:opacity .9s,visibility .9s}
   .loader.done{opacity:0;visibility:hidden}
-  .loader .top{font-size:13px;font-weight:300;letter-spacing:.46em;padding-left:.46em;opacity:0;animation:l5 .7s ease .1s forwards}
-  .loader .pct{font-size:clamp(64px,13vw,150px);font-weight:600;letter-spacing:-.04em;line-height:1;margin-top:12px}
-  .loader .sub{font-size:11px;letter-spacing:.4em;color:#8b8b8b;margin-top:14px;opacity:0;animation:l5 .7s ease .1s forwards}
-  @keyframes l5{to{opacity:1}}
+  .loader-logo{display:flex;align-items:center;gap:32px;opacity:0;transform:translateY(14px);animation:l5 1s cubic-bezier(.16,1,.3,1) .15s forwards}
+  .loader-pi{width:clamp(64px,8vw,100px);height:auto;flex-shrink:0}
+  .loader-wordmark{display:flex;flex-direction:column}
+  .loader-main{font-family:'Great Vibes',cursive;font-size:clamp(48px,7.5vw,84px);color:#0c0c0c;line-height:1.15;letter-spacing:0}
+  .loader-rule{height:1.5px;background:linear-gradient(90deg,transparent 0%,#c4a24f 15%,#c4a24f 85%,transparent 100%);margin:6px 0}
+  .loader-sub{font-family:'Great Vibes',cursive;font-size:clamp(14px,2vw,21px);color:#555;letter-spacing:.04em}
+  .loader-bar{width:200px;height:1px;background:#e8e8e8;position:relative;overflow:hidden;border-radius:1px}
+  .loader-bar::after{content:'';position:absolute;top:0;left:-50%;width:50%;height:100%;background:#c4a24f;animation:lb 1.5s cubic-bezier(.7,0,.3,1) infinite}
+  @keyframes l5{to{opacity:1;transform:none}}
+  @keyframes lb{to{left:100%}}
 
   /* NAV */
   .nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;height:60px;padding:0 38px;color:#fff;transition:color .4s}
   .nav.light{color:var(--ink)}
-  .brand{font-weight:600;font-size:16px;letter-spacing:.18em}.brand span{font-weight:300;opacity:.7}
+  .brand{display:flex;align-items:center;gap:8px;font-weight:400;letter-spacing:0}
+  .brand-pi{width:18px;height:auto;flex-shrink:0}
+  .brand-name{font-family:'Great Vibes',cursive;font-size:22px;line-height:1;letter-spacing:0}
   .menu{display:flex;gap:2px;list-style:none}
   .menu>li{position:relative}
   .menu>li>a{display:flex;align-items:center;gap:5px;padding:9px 12px;font-size:13px;border-radius:7px;transition:opacity .2s}
@@ -97,9 +107,23 @@
 </style>
 </head>
 <body>
-  <div class="loader" id="loader"><div class="top">VISHKAR</div><div class="pct" id="pct">0%</div><div class="sub">INTERIORS — LOADING</div></div>
+  <div class="loader" id="loader">
+    <div class="loader-logo">
+      <svg class="loader-pi" viewBox="0 0 110 152" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 5,52 C 28,30 64,24 96,36 C 105,40 110,45 107,51" stroke="#0c0c0c" stroke-width="12" stroke-linecap="round"/>
+        <path d="M 27,39 C 24,57 19,80 13,105 C 9,124 4,140 0,152" stroke="#0c0c0c" stroke-width="11" stroke-linecap="round"/>
+        <path d="M 81,35 C 84,54 87,78 91,104 C 95,124 103,140 110,152" stroke="#0c0c0c" stroke-width="11" stroke-linecap="round"/>
+      </svg>
+      <div class="loader-wordmark">
+        <span class="loader-main">Pen and Ink</span>
+        <div class="loader-rule"></div>
+        <span class="loader-sub">architecture &nbsp;&nbsp; interiors &nbsp;&nbsp; urbanism</span>
+      </div>
+    </div>
+    <div class="loader-bar"></div>
+  </div>
   <nav class="nav" id="nav">
-    <div class="brand">VISHKAR<span> · INTERIORS</span></div>
+    <div class="brand"><svg class="brand-pi" viewBox="0 0 70 92" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M 3,32 C 18,18 38,14 58,22 C 64,25 66,28 64,32" stroke="currentColor" stroke-width="7" stroke-linecap="round"/><path d="M 16,22 C 14,34 11,48 8,62 C 5,74 2,84 0,91" stroke="currentColor" stroke-width="6.5" stroke-linecap="round"/><path d="M 50,20 C 52,32 53,47 55,62 C 58,74 63,84 68,91" stroke="currentColor" stroke-width="6.5" stroke-linecap="round"/></svg><span class="brand-name">Pen and Ink</span></div>
     <ul class="menu">
       <li class="has"><a href="#">About Us</a><div class="flyout"><a href="#">Our Story</a><a href="#">The Team</a><a href="#">Press &amp; Awards</a></div></li>
       <li class="has"><a href="#">Services</a><div class="flyout"><a href="#">Residential</a><a href="#">Commercial</a><a href="#">Styling &amp; Staging</a><a href="#">Renovation</a></div></li>
@@ -172,8 +196,7 @@
 
 <script>
   const hideLoader=()=>document.getElementById('loader').classList.add('done');
-  window.addEventListener('load',()=>setTimeout(hideLoader,1150));setTimeout(hideLoader,2600);
-  const pct=document.getElementById('pct');let pv=0;const pi=setInterval(()=>{pv=Math.min(100,pv+Math.ceil((100-pv)/9)+1);pct.textContent=pv+'%';if(pv>=100)clearInterval(pi);},34);
+  window.addEventListener('load',()=>setTimeout(hideLoader,1400));setTimeout(hideLoader,2800);
   const deck=document.getElementById('deck'),slides=[...document.querySelectorAll('.slide')],dots=document.getElementById('dots'),nav=document.getElementById('nav');
   const desktop=()=>matchMedia('(min-width:901px)').matches;
   slides.forEach((s,i)=>{const b=document.createElement('button');if(i===0)b.classList.add('on');b.onclick=()=>slides[i].scrollIntoView({behavior:'smooth'});dots.appendChild(b);});

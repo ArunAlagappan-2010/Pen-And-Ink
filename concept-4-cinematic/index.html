@@ -3,7 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vishkar Interiors — Horizontal</title>
+<title>Pen and Ink — Horizontal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
 <style>
   :root{
     --ink:#0c0c0c; --soft:#6f6f6f; --line:#e7e7e7; --bg:#ffffff; --pearl:#f3f3f1;
@@ -29,7 +31,9 @@
 
   /* NAV */
   .nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;height:60px;padding:0 36px;background:rgba(255,255,255,.85);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
-  .brand{font-weight:600;font-size:16px;letter-spacing:.18em}.brand span{font-weight:300;color:var(--soft)}
+  .brand{display:flex;align-items:center;gap:8px;font-weight:400;letter-spacing:0}
+  .brand-pi{width:18px;height:auto;flex-shrink:0}
+  .brand-name{font-family:'Great Vibes',cursive;font-size:22px;line-height:1;letter-spacing:0}
   .menu{display:flex;gap:2px;list-style:none}
   .menu>li{position:relative}
   .menu>li>a{display:flex;align-items:center;gap:5px;padding:9px 12px;font-size:13px;color:#333;border-radius:7px;transition:background .2s}
@@ -107,7 +111,7 @@
 <body>
   <div class="loader" id="loader"><div class="mk"><b>VISHKAR</b><span>INTERIORS</span></div><div class="track"><i></i></div><div class="arrow">&rarr; &rarr;</div></div>
   <nav class="nav">
-    <div class="brand">VISHKAR<span> · INTERIORS</span></div>
+    <div class="brand"><svg class="brand-pi" viewBox="0 0 70 92" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M 3,32 C 18,18 38,14 58,22 C 64,25 66,28 64,32" stroke="currentColor" stroke-width="7" stroke-linecap="round"/><path d="M 16,22 C 14,34 11,48 8,62 C 5,74 2,84 0,91" stroke="currentColor" stroke-width="6.5" stroke-linecap="round"/><path d="M 50,20 C 52,32 53,47 55,62 C 58,74 63,84 68,91" stroke="currentColor" stroke-width="6.5" stroke-linecap="round"/></svg><span class="brand-name">Pen and Ink</span></div>
     <ul class="menu">
       <li class="has"><a href="#">About Us</a><div class="flyout"><a href="#">Our Story</a><a href="#">The Team</a><a href="#">Press &amp; Awards</a></div></li>
       <li class="has"><a href="#">Services</a><div class="flyout"><a href="#">Residential</a><a href="#">Commercial</a><a href="#">Styling &amp; Staging</a><a href="#">Renovation</a></div></li>
