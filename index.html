@@ -117,16 +117,17 @@
     <div class="slide"><img src="assets/mono/i08.jpg" alt=""></div>
     <div class="slide"><img src="assets/mono/i09.jpg" alt=""></div>
     <div class="slide"><img src="assets/mono/i10.jpg" alt=""></div>
+    <div class="slide"><img src="assets/mono/i11.jpg" alt=""></div>
   </main>
 
-  <div class="dots" id="dots"><span class="dot on"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+  <div class="dots" id="dots"><span class="dot on"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
   <div class="word in" id="word">Light</div>
 
 <script>
   const hideLoader=()=>document.getElementById('loader').classList.add('done');
   window.addEventListener('load',()=>setTimeout(hideLoader,1200));setTimeout(hideLoader,2800);
 
-  const words=['Light','Still','Shelter','Grain','Depth','Form','Craft','Tone','Void','Ground'];
+  const words=['Light','Still','Shelter','Grain','Depth','Form','Craft','Tone','Void','Ground','Good'];
   const slides=[...document.querySelectorAll('.slide')];
   const dotEls=[...document.querySelectorAll('.dot')];
   const word=document.getElementById('word');
