@@ -4,140 +4,159 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pen and Ink</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Great+Vibes&display=swap" rel="stylesheet">
 <style>
   :root{
     --ink:#141414; --soft:#8a8a8a; --line:#e6e6e3;
     --sans:'SF Pro Display','Helvetica Neue','Segoe UI',Arial,sans-serif;
-    --mono:'SF Mono','JetBrains Mono','Consolas',monospace;
     --script:'Great Vibes',cursive;
+    --display:'Cormorant Garamond',serif;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html,body{height:100%;overflow:hidden}
-  body{font-family:var(--sans);color:var(--ink);background:#0b0b0b;-webkit-font-smoothing:antialiased}
+  body{font-family:var(--sans);color:var(--ink);background:#111;-webkit-font-smoothing:antialiased}
   a{text-decoration:none;color:inherit}
   .hide{display:none!important}
 
   /* LOADER */
-  .loader{position:fixed;inset:0;z-index:60;background:#fcfcfb;display:flex;align-items:center;justify-content:center;transition:opacity .8s,visibility .8s}
+  .loader{position:fixed;inset:0;z-index:70;background:#faf9f7;display:flex;align-items:center;justify-content:center;transition:opacity .9s,visibility .9s}
   .loader.done{opacity:0;visibility:hidden}
-  .loader .lwrap{display:flex;flex-direction:column;align-items:center;gap:14px;opacity:0;animation:fin .9s ease .1s forwards}
-  .loader img{height:78px;width:auto}
-  .loader .fb{display:flex;align-items:center;gap:14px}
-  .loader .fb svg{width:34px;color:var(--ink)}
-  .loader .fb b{font-family:var(--script);font-size:54px}
-  .loader .ln{width:150px;height:1px;background:var(--line);overflow:hidden}
-  .loader .ln i{display:block;height:100%;width:0;background:var(--ink);animation:ffill 1.2s ease forwards}
+  .loader .lwrap{display:flex;flex-direction:column;align-items:center;gap:16px;opacity:0;animation:fin .9s ease .15s forwards}
+  .loader img{height:90px;width:auto}
+  .loader .fb{display:flex;align-items:center;gap:16px}
+  .loader .fb svg{width:40px;color:var(--ink)}
+  .loader .fb b{font-family:var(--script);font-size:62px;color:var(--ink)}
+  .loader .ln{width:160px;height:1px;background:var(--line);overflow:hidden}
+  .loader .ln i{display:block;height:100%;width:0;background:var(--ink);animation:ffill 1.3s ease .3s forwards}
   @keyframes fin{to{opacity:1}}@keyframes ffill{to{width:100%}}
 
-  /* TRANSPARENT NAV */
-  .nav{position:fixed;top:0;left:0;right:0;z-index:40;height:72px;display:flex;align-items:center;justify-content:space-between;
-       padding:0 40px;background:transparent;border:none}
-  .brand{display:flex;align-items:center;gap:11px;height:100%}
-  .brand .logo-img{height:46px;width:auto;filter:brightness(0) invert(1)}
-  .brand .fb{display:flex;align-items:center;gap:10px}
-  .brand .fb svg{width:19px;color:#fff}
-  .brand .fb .nm{font-family:var(--script);font-size:26px;line-height:1;color:#fff}
-  /* Menu pinned to absolute center of nav */
+  /* TRANSPARENT NAV — 20 % larger */
+  .nav{position:fixed;top:0;left:0;right:0;z-index:60;height:88px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;background:transparent;border:none}
+  .brand{display:flex;align-items:center;gap:12px;height:100%}
+  /* Homepage always uses SVG fallback (white, no background box) */
+  .brand .fb{display:flex;align-items:center;gap:11px}
+  .brand .fb svg{width:22px;color:#fff}
+  .brand .fb .nm{font-family:var(--script);font-size:30px;line-height:1;color:#fff}
+  /* Menu centred */
   .menu{position:absolute;left:50%;transform:translateX(-50%);display:flex;gap:2px;list-style:none;white-space:nowrap}
-  .menu a{display:block;padding:9px 15px;font-size:13px;color:#fff;font-weight:700;letter-spacing:.02em;border-radius:7px;transition:background .2s}
+  .menu a{display:block;padding:10px 17px;font-size:15px;color:#fff;font-weight:700;letter-spacing:.02em;border-radius:7px;transition:background .2s}
   .menu a:hover{background:rgba(255,255,255,.14)}
   .navright{display:flex;align-items:center}
-  .burger{display:none;background:none;border:none;font-size:24px;color:#fff}
+  .burger{display:none;background:none;border:none;font-size:26px;color:#fff}
 
   /* FULLSCREEN SLIDESHOW */
-  .show{position:fixed;inset:0;z-index:10;background:#888}
-  .slide{position:absolute;inset:0;opacity:0;transition:opacity .42s ease}
+  .show{position:fixed;inset:0;z-index:10;background:#111}
+  .slide{position:absolute;inset:0;opacity:0;transition:opacity .9s ease}
   .slide.on{opacity:1}
-  /* Very subtle single-direction drift — all slides creep left→right */
   .slide img{width:100%;height:100%;object-fit:cover;transform:scale(1.02) translateX(0%);transition:transform 18s linear}
   .slide.on img{transform:scale(1.02) translateX(0.5%)}
-  /* Soft grey veil at top so transparent nav stays legible */
-  .show::before{content:"";position:absolute;left:0;right:0;top:0;height:110px;z-index:3;pointer-events:none;
-    background:linear-gradient(180deg,rgba(30,30,30,.32) 0%,rgba(0,0,0,0) 100%)}
+  /* soft grey veil — nav legibility */
+  .show::before{content:"";position:absolute;left:0;right:0;top:0;height:120px;z-index:3;pointer-events:none;
+    background:linear-gradient(180deg,rgba(30,30,30,.34) 0%,rgba(0,0,0,0) 100%)}
   .show::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
-    background:linear-gradient(180deg,rgba(0,0,0,0) 50%,rgba(0,0,0,.48) 100%)}
+    background:linear-gradient(180deg,rgba(0,0,0,0) 48%,rgba(0,0,0,.52) 100%)}
 
-  /* ONE-WORD CAPTION — bottom left */
-  .word{position:fixed;left:44px;bottom:46px;z-index:30;color:#fff;
-    font-size:clamp(22px,3.2vw,56px);font-weight:600;letter-spacing:-.02em;line-height:.9;
-    text-shadow:0 2px 20px rgba(0,0,0,.4);opacity:0;transform:translateY(10px);transition:opacity .9s ease,transform .9s ease}
+  /* WORD — Cormorant Garamond, luxury screaming size */
+  .word{position:fixed;left:52px;bottom:52px;z-index:30;color:#fff;
+    font-family:var(--display);font-style:italic;font-weight:300;
+    font-size:clamp(38px,6.5vw,118px);letter-spacing:.01em;line-height:.85;
+    text-shadow:0 2px 28px rgba(0,0,0,.35);
+    opacity:0;transform:translateY(12px);transition:opacity .85s ease,transform .85s ease}
   .word.in{opacity:1;transform:none}
-  .dots{position:fixed;left:46px;bottom:calc(46px + clamp(22px,3.2vw,56px) + 16px);z-index:30;display:flex;gap:7px;align-items:center}
-  .dot{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.3);transition:background .45s,transform .45s;cursor:default}
-  .dot.on{background:rgba(255,255,255,.88);transform:scale(1.4)}
+  .dots{position:fixed;left:54px;bottom:calc(52px + clamp(38px,6.5vw,118px) + 20px);z-index:30;display:flex;gap:8px;align-items:center}
+  .dot{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.28);transition:background .45s,transform .45s;cursor:default}
+  .dot.on{background:rgba(255,255,255,.9);transform:scale(1.4)}
 
-
-  @media(max-width:760px){
-    .nav{padding:0 20px;height:62px}.menu{display:none}.burger{display:block}
-    .brand .logo-img{height:36px}
-    .word{left:22px;bottom:28px;font-size:clamp(20px,6vw,40px)}
-    .dots{left:24px;bottom:calc(28px + clamp(20px,6vw,40px) + 14px)}
+  @media(max-width:780px){
+    .nav{padding:0 22px;height:70px}.menu{display:none}.burger{display:block}
+    .brand .fb svg{width:18px}.brand .fb .nm{font-size:24px}
+    .word{left:24px;bottom:32px;font-size:clamp(30px,9vw,64px)}
+    .dots{left:26px;bottom:calc(32px + clamp(30px,9vw,64px) + 16px)}
   }
 </style>
 </head>
 <body>
-  <!-- LOADER -->
-  <div class="loader" id="loader">
-    <div class="lwrap">
-      <img src="assets/logo.png" alt="Pen and Ink" onerror="this.classList.add('hide');this.nextElementSibling.classList.remove('hide')">
-      <div class="fb hide"><svg viewBox="0 0 70 92" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M 3,32 C 18,18 38,14 58,22 C 64,25 66,28 64,32" stroke="currentColor" stroke-width="7" stroke-linecap="round"/><path d="M 16,22 C 14,34 11,48 8,62 C 5,74 2,84 0,91" stroke="currentColor" stroke-width="6.5" stroke-linecap="round"/><path d="M 50,20 C 52,32 53,47 55,62 C 58,74 63,84 68,91" stroke="currentColor" stroke-width="6.5" stroke-linecap="round"/></svg><b>Pen and Ink</b></div>
-      <div class="ln"><i></i></div>
+
+<!-- LOADER -->
+<div class="loader" id="loader">
+  <div class="lwrap">
+    <img src="assets/logo.png" alt="Pen and Ink" onerror="this.classList.add('hide');this.nextElementSibling.classList.remove('hide')">
+    <div class="fb hide">
+      <svg viewBox="0 0 70 92" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 3,32 C 18,18 38,14 58,22 C 64,25 66,28 64,32" stroke="currentColor" stroke-width="7" stroke-linecap="round"/>
+        <path d="M 16,22 C 14,34 11,48 8,62 C 5,74 2,84 0,91" stroke="currentColor" stroke-width="6.5" stroke-linecap="round"/>
+        <path d="M 50,20 C 52,32 53,47 55,62 C 58,74 63,84 68,91" stroke="currentColor" stroke-width="6.5" stroke-linecap="round"/>
+      </svg>
+      <b>Pen and Ink</b>
     </div>
+    <div class="ln"><i></i></div>
   </div>
+</div>
 
-  <!-- STATIC NAV -->
-  <nav class="nav">
-    <a class="brand" href="#">
-      <img src="assets/logo.png" alt="Pen and Ink" class="logo-img" onerror="this.classList.add('hide');this.nextElementSibling.classList.remove('hide')">
-      <span class="fb hide"><svg viewBox="0 0 70 92" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M 3,32 C 18,18 38,14 58,22 C 64,25 66,28 64,32" stroke="currentColor" stroke-width="7" stroke-linecap="round"/><path d="M 16,22 C 14,34 11,48 8,62 C 5,74 2,84 0,91" stroke="currentColor" stroke-width="6.5" stroke-linecap="round"/><path d="M 50,20 C 52,32 53,47 55,62 C 58,74 63,84 68,91" stroke="currentColor" stroke-width="6.5" stroke-linecap="round"/></svg><span class="nm">Pen and Ink</span></span>
-    </a>
-    <div class="navright">
-      <ul class="menu">
-        <li><a href="#">About Us</a></li>
-        <li><a href="#">Services</a></li>
-        <li><a href="#">Our Work</a></li>
-        <li><a href="#">Office</a></li>
-        <li><a href="#">Contact Us</a></li>
-      </ul>
-      <button class="burger">≡</button>
-    </div>
-  </nav>
+<!-- TRANSPARENT NAV — SVG brand always (no white-box PNG on dark bg) -->
+<nav class="nav">
+  <a class="brand" href="index.html">
+    <span class="fb">
+      <svg viewBox="0 0 70 92" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 3,32 C 18,18 38,14 58,22 C 64,25 66,28 64,32" stroke="currentColor" stroke-width="7" stroke-linecap="round"/>
+        <path d="M 16,22 C 14,34 11,48 8,62 C 5,74 2,84 0,91" stroke="currentColor" stroke-width="6.5" stroke-linecap="round"/>
+        <path d="M 50,20 C 52,32 53,47 55,62 C 58,74 63,84 68,91" stroke="currentColor" stroke-width="6.5" stroke-linecap="round"/>
+      </svg>
+      <span class="nm">Pen and Ink</span>
+    </span>
+  </a>
+  <div class="navright">
+    <ul class="menu">
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="our-work.html">Our Work</a></li>
+      <li><a href="office.html">Office</a></li>
+      <li><a href="contact.html">Contact Us</a></li>
+    </ul>
+    <button class="burger">&#9776;</button>
+  </div>
+</nav>
 
-  <!-- SLIDESHOW -->
-  <main class="show" id="show">
-    <div class="slide on"><img src="assets/mono/i01.jpg" alt=""></div>
-    <div class="slide"><img src="assets/mono/i02.jpg" alt=""></div>
-    <div class="slide"><img src="assets/mono/i03.jpg" alt=""></div>
-    <div class="slide"><img src="assets/mono/i04.jpg" alt=""></div>
-    <div class="slide"><img src="assets/mono/i05.jpg" alt=""></div>
-    <div class="slide"><img src="assets/mono/i06.jpg" alt=""></div>
-    <div class="slide"><img src="assets/mono/i07.jpg" alt=""></div>
-    <div class="slide"><img src="assets/mono/i08.jpg" alt=""></div>
-    <div class="slide"><img src="assets/mono/i09.jpg" alt=""></div>
-    <div class="slide"><img src="assets/mono/i10.jpg" alt=""></div>
-    <div class="slide"><img src="assets/mono/i11.jpg" alt=""></div>
-  </main>
+<!-- SLIDESHOW -->
+<main class="show" id="show">
+  <div class="slide on"><img src="assets/mono/i01.jpg" alt=""></div>
+  <div class="slide"><img src="assets/mono/i02.jpg" alt=""></div>
+  <div class="slide"><img src="assets/mono/i03.jpg" alt=""></div>
+  <div class="slide"><img src="assets/mono/i04.jpg" alt=""></div>
+  <div class="slide"><img src="assets/mono/i05.jpg" alt=""></div>
+  <div class="slide"><img src="assets/mono/i06.jpg" alt=""></div>
+  <div class="slide"><img src="assets/mono/i07.jpg" alt=""></div>
+  <div class="slide"><img src="assets/mono/i08.jpg" alt=""></div>
+  <div class="slide"><img src="assets/mono/i09.jpg" alt=""></div>
+  <div class="slide"><img src="assets/mono/i10.jpg" alt=""></div>
+  <div class="slide"><img src="assets/mono/i11.jpg" alt=""></div>
+</main>
 
-  <div class="dots" id="dots"><span class="dot on"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-  <div class="word in" id="word">Light</div>
+<div class="dots" id="dots">
+  <span class="dot on"></span><span class="dot"></span><span class="dot"></span>
+  <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+  <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+  <span class="dot"></span><span class="dot"></span>
+</div>
+<div class="word in" id="word">Light</div>
 
 <script>
   const hideLoader=()=>document.getElementById('loader').classList.add('done');
-  window.addEventListener('load',()=>setTimeout(hideLoader,1200));setTimeout(hideLoader,2800);
+  window.addEventListener('load',()=>setTimeout(hideLoader,1200));
+  setTimeout(hideLoader,2800);
 
   const words=['Light','Still','Shelter','Grain','Depth','Form','Craft','Tone','Void','Ground','Good'];
   const slides=[...document.querySelectorAll('.slide')];
   const dotEls=[...document.querySelectorAll('.dot')];
   const word=document.getElementById('word');
-  let i=0,timer,goTimer;
+  let i=0, timer, goTimer;
 
-  // Sequenced: fade out → grey hold → fade in next
-  // Freeze outgoing image transform so it doesn't drift backward while fading
   function go(k){
     const prev=i;
     i=(k+slides.length)%slides.length;
+    // freeze outgoing image to prevent backward drift
     const prevImg=slides[prev].querySelector('img');
     const frozen=getComputedStyle(prevImg).transform;
     prevImg.style.transition='none';
@@ -146,21 +165,21 @@
     word.classList.remove('in');
     clearTimeout(goTimer);
     goTimer=setTimeout(()=>{
-      // Reset outgoing image silently, then restore transition
       prevImg.style.transform='scale(1.02) translateX(0%)';
       requestAnimationFrame(()=>requestAnimationFrame(()=>{prevImg.style.transition='';}));
       slides[i].classList.add('on');
       dotEls.forEach((d,j)=>d.classList.toggle('on',j===i));
-      setTimeout(()=>{word.textContent=words[i];word.classList.add('in');},180);
-    },460);
+      setTimeout(()=>{word.textContent=words[i];word.classList.add('in');},200);
+    },500);
     restart();
   }
   function restart(){clearInterval(timer);timer=setInterval(()=>go(i+1),5500);}
-
-  // Initial state (HTML already shows slide 0 + dot 0)
-  word.textContent=words[0];word.classList.add('in');
+  word.textContent=words[0]; word.classList.add('in');
   restart();
-  addEventListener('keydown',e=>{if(e.key==='ArrowRight')go(i+1);if(e.key==='ArrowLeft')go(i-1);});
+  addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight')go(i+1);
+    if(e.key==='ArrowLeft')go(i-1);
+  });
 </script>
 </body>
 </html>
