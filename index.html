@@ -51,8 +51,8 @@
   .slide{position:absolute;inset:0;opacity:0;transition:opacity .42s ease}
   .slide.on{opacity:1}
   /* Very subtle single-direction drift — all slides creep left→right */
-  .slide img{width:100%;height:100%;object-fit:cover;transform:scale(1.02) translateX(0%);transition:transform 10s ease}
-  .slide.on img{transform:scale(1.02) translateX(0.7%)}
+  .slide img{width:100%;height:100%;object-fit:cover;transform:scale(1.02) translateX(0%);transition:transform 18s linear}
+  .slide.on img{transform:scale(1.02) translateX(0.5%)}
   /* Soft grey veil at top so transparent nav stays legible */
   .show::before{content:"";position:absolute;left:0;right:0;top:0;height:110px;z-index:3;pointer-events:none;
     background:linear-gradient(180deg,rgba(30,30,30,.32) 0%,rgba(0,0,0,0) 100%)}
@@ -133,13 +133,21 @@
   let i=0,timer,goTimer;
 
   // Sequenced: fade out → grey hold → fade in next
+  // Freeze outgoing image transform so it doesn't drift backward while fading
   function go(k){
     const prev=i;
     i=(k+slides.length)%slides.length;
+    const prevImg=slides[prev].querySelector('img');
+    const frozen=getComputedStyle(prevImg).transform;
+    prevImg.style.transition='none';
+    prevImg.style.transform=frozen;
     slides[prev].classList.remove('on');
     word.classList.remove('in');
     clearTimeout(goTimer);
     goTimer=setTimeout(()=>{
+      // Reset outgoing image silently, then restore transition
+      prevImg.style.transform='scale(1.02) translateX(0%)';
+      requestAnimationFrame(()=>requestAnimationFrame(()=>{prevImg.style.transition='';}));
       slides[i].classList.add('on');
       dotEls.forEach((d,j)=>d.classList.toggle('on',j===i));
       setTimeout(()=>{word.textContent=words[i];word.classList.add('in');},180);
