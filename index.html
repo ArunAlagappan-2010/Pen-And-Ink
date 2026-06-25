@@ -15,128 +15,137 @@
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html,body{height:100%;overflow:hidden}
-  body{font-family:var(--sans);color:var(--ink);-webkit-font-smoothing:antialiased;background:#fcfcfb;}
-
-  /* paper texture — white with very light grey grain */
-  .paper{position:fixed;inset:0;z-index:0;pointer-events:none;
-    background:radial-gradient(120% 120% at 50% 0%, #ffffff 0%, #f6f6f4 100%);}
-  .paper::after{content:"";position:absolute;inset:0;opacity:.5;mix-blend-mode:multiply;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.06'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+  body{font-family:var(--sans);color:var(--ink);background:#0b0b0b;-webkit-font-smoothing:antialiased}
+  a{text-decoration:none;color:inherit}
+  .hide{display:none!important}
 
   /* LOADER */
-  .loader{position:fixed;inset:0;z-index:50;background:#fcfcfb;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;transition:opacity .8s,visibility .8s}
+  .loader{position:fixed;inset:0;z-index:60;background:#fcfcfb;display:flex;align-items:center;justify-content:center;transition:opacity .8s,visibility .8s}
   .loader.done{opacity:0;visibility:hidden}
-  .loader .mk{display:flex;align-items:center;gap:14px;opacity:0;animation:fin .9s ease .1s forwards}
-  .loader .mk svg{width:34px;height:auto;color:var(--ink)}
-  .loader .mk b{font-family:var(--script);font-size:clamp(40px,7vw,62px);font-weight:400}
-  .loader .sub{font-family:var(--mono);font-size:10.5px;letter-spacing:.34em;text-transform:uppercase;color:var(--soft);opacity:0;animation:fin .7s ease 1s forwards}
-  .loader .ln{width:150px;height:1px;background:var(--line);overflow:hidden;margin-top:4px}
+  .loader .lwrap{display:flex;flex-direction:column;align-items:center;gap:14px;opacity:0;animation:fin .9s ease .1s forwards}
+  .loader img{height:78px;width:auto}
+  .loader .fb{display:flex;align-items:center;gap:14px}
+  .loader .fb svg{width:34px;color:var(--ink)}
+  .loader .fb b{font-family:var(--script);font-size:54px}
+  .loader .ln{width:150px;height:1px;background:var(--line);overflow:hidden}
   .loader .ln i{display:block;height:100%;width:0;background:var(--ink);animation:ffill 1.2s ease forwards}
   @keyframes fin{to{opacity:1}}@keyframes ffill{to{width:100%}}
 
-  /* TOP BAR (no dropdowns) */
-  .bar{position:fixed;top:0;left:0;right:0;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:26px 44px}
-  .brand{display:flex;align-items:center;gap:11px}
-  .brand svg{width:20px;height:auto;color:var(--ink)}
-  .brand .nm{font-family:var(--script);font-size:27px;line-height:1}
-  .bar .r{display:flex;align-items:center;gap:28px;font-size:12.5px;letter-spacing:.04em;color:var(--soft)}
-  .bar .r a{color:var(--ink);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .25s}
-  .bar .r a:hover{border-color:var(--ink)}
-  .bar .tag{font-family:var(--mono);text-transform:uppercase;letter-spacing:.14em}
+  /* STATIC NAV BAR (old look, solid, never moves) */
+  .nav{position:fixed;top:0;left:0;right:0;z-index:40;height:72px;display:flex;align-items:center;justify-content:space-between;
+       padding:0 40px;background:rgba(255,255,255,.94);backdrop-filter:saturate(180%) blur(14px);border-bottom:1px solid var(--line)}
+  .brand{display:flex;align-items:center;gap:11px;height:100%}
+  .brand .logo-img{height:46px;width:auto}
+  .brand .fb{display:flex;align-items:center;gap:10px}
+  .brand .fb svg{width:19px;color:var(--ink)}
+  .brand .fb .nm{font-family:var(--script);font-size:26px;line-height:1}
+  .menu{display:flex;gap:4px;list-style:none}
+  .menu a{display:block;padding:9px 14px;font-size:13.5px;color:#333;border-radius:7px;transition:background .2s,color .2s}
+  .menu a:hover{background:#f3f2ef;color:var(--ink)}
+  .nav .enq{font-size:13px;letter-spacing:.04em;border:1px solid var(--ink);padding:9px 18px;border-radius:980px;transition:background .2s,color .2s}
+  .nav .enq:hover{background:var(--ink);color:#fff}
+  .navright{display:flex;align-items:center;gap:18px}
+  .burger{display:none;background:none;border:none;font-size:24px}
 
-  /* SLIDESHOW */
-  .show{position:fixed;inset:0;z-index:10}
-  .slide{position:absolute;inset:0;opacity:0;transition:opacity 1.4s ease}
+  /* FULLSCREEN SLIDESHOW */
+  .show{position:fixed;inset:0;z-index:10;background:#0b0b0b}
+  .slide{position:absolute;inset:0;opacity:0;transition:opacity 1.5s ease}
   .slide.on{opacity:1}
-  .frame{position:absolute;inset:100px 44px 116px;display:flex;align-items:center;justify-content:center}
-  .frame img{max-width:100%;max-height:100%;object-fit:contain;mix-blend-mode:multiply;
-    transform:scale(1.0);transition:transform 8s ease}
-  .slide.on .frame img{transform:scale(1.035)}
+  .slide img{width:100%;height:100%;object-fit:cover;transform:scale(1.0);transition:transform 6.5s ease}
+  .slide.on img{transform:scale(1.06)}
+  .show::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
+    background:linear-gradient(180deg,rgba(0,0,0,.32) 0%,rgba(0,0,0,0) 24%,rgba(0,0,0,0) 55%,rgba(0,0,0,.55) 100%)}
 
-  /* caption */
-  .meta{position:fixed;left:44px;bottom:40px;z-index:30}
-  .meta .no{font-family:var(--mono);font-size:12px;color:var(--soft);letter-spacing:.08em;margin-bottom:10px}
-  .meta .t{font-size:clamp(26px,3.4vw,40px);font-weight:600;letter-spacing:-.02em;line-height:1.05}
-  .meta .s{font-family:var(--mono);font-size:12.5px;color:var(--soft);letter-spacing:.06em;margin-top:8px;text-transform:uppercase}
+  /* ONE-WORD CAPTION — bottom left */
+  .word{position:fixed;left:44px;bottom:46px;z-index:30;color:#fff;
+    font-size:clamp(40px,7vw,104px);font-weight:600;letter-spacing:-.03em;line-height:.9;
+    text-shadow:0 2px 30px rgba(0,0,0,.5);opacity:0;transform:translateY(14px);transition:opacity .9s ease,transform .9s ease}
+  .word.in{opacity:1;transform:none}
+  .count{position:fixed;left:46px;bottom:calc(46px + clamp(40px,7vw,104px) + 14px);z-index:30;
+    font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:rgba(255,255,255,.75);text-shadow:0 1px 10px rgba(0,0,0,.5)}
 
-  /* progress dots */
-  .dots{position:fixed;right:44px;bottom:44px;z-index:30;display:flex;gap:10px;align-items:center}
-  .dots button{width:26px;height:2px;border:none;background:var(--line);cursor:pointer;padding:0;position:relative;overflow:hidden}
-  .dots button i{position:absolute;inset:0;width:0;background:var(--ink)}
-  .dots button.on i{width:100%;transition:width 5s linear}
+  /* slim bottom progress */
+  .prog{position:fixed;left:0;right:0;bottom:0;height:2px;z-index:30;background:rgba(255,255,255,.18)}
+  .prog i{display:block;height:100%;width:0;background:rgba(255,255,255,.9)}
+  .prog i.run{width:100%;transition:width 5s linear}
 
-  @media(max-width:720px){
-    .bar{padding:20px 22px}.bar .tag{display:none}
-    .frame{inset:88px 22px 132px}
-    .meta{left:22px;bottom:28px}.dots{right:22px;bottom:28px}
+  @media(max-width:760px){
+    .nav{padding:0 20px;height:62px}.menu,.nav .enq{display:none}.burger{display:block}
+    .brand .logo-img{height:38px}
+    .word{left:22px;bottom:30px}
+    .count{left:24px;bottom:calc(30px + clamp(40px,7vw,104px) + 12px)}
   }
 </style>
 </head>
 <body>
-  <div class="paper"></div>
-
+  <!-- LOADER -->
   <div class="loader" id="loader">
-    <div class="mk">
-      <svg viewBox="0 0 70 92" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M 3,32 C 18,18 38,14 58,22 C 64,25 66,28 64,32" stroke="currentColor" stroke-width="7" stroke-linecap="round"/><path d="M 16,22 C 14,34 11,48 8,62 C 5,74 2,84 0,91" stroke="currentColor" stroke-width="6.5" stroke-linecap="round"/><path d="M 50,20 C 52,32 53,47 55,62 C 58,74 63,84 68,91" stroke="currentColor" stroke-width="6.5" stroke-linecap="round"/></svg>
-      <b>Pen and Ink</b>
+    <div class="lwrap">
+      <img src="assets/logo.png" alt="Pen and Ink" onerror="this.classList.add('hide');this.nextElementSibling.classList.remove('hide')">
+      <div class="fb hide"><svg viewBox="0 0 70 92" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M 3,32 C 18,18 38,14 58,22 C 64,25 66,28 64,32" stroke="currentColor" stroke-width="7" stroke-linecap="round"/><path d="M 16,22 C 14,34 11,48 8,62 C 5,74 2,84 0,91" stroke="currentColor" stroke-width="6.5" stroke-linecap="round"/><path d="M 50,20 C 52,32 53,47 55,62 C 58,74 63,84 68,91" stroke="currentColor" stroke-width="6.5" stroke-linecap="round"/></svg><b>Pen and Ink</b></div>
+      <div class="ln"><i></i></div>
     </div>
-    <div class="sub">architecture · interiors · urbanism</div>
-    <div class="ln"><i></i></div>
   </div>
 
-  <header class="bar">
-    <div class="brand">
-      <svg viewBox="0 0 70 92" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M 3,32 C 18,18 38,14 58,22 C 64,25 66,28 64,32" stroke="currentColor" stroke-width="7" stroke-linecap="round"/><path d="M 16,22 C 14,34 11,48 8,62 C 5,74 2,84 0,91" stroke="currentColor" stroke-width="6.5" stroke-linecap="round"/><path d="M 50,20 C 52,32 53,47 55,62 C 58,74 63,84 68,91" stroke="currentColor" stroke-width="6.5" stroke-linecap="round"/></svg>
-      <span class="nm">Pen and Ink</span>
+  <!-- STATIC NAV -->
+  <nav class="nav">
+    <a class="brand" href="#">
+      <img src="assets/logo.png" alt="Pen and Ink" class="logo-img" onerror="this.classList.add('hide');this.nextElementSibling.classList.remove('hide')">
+      <span class="fb hide"><svg viewBox="0 0 70 92" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M 3,32 C 18,18 38,14 58,22 C 64,25 66,28 64,32" stroke="currentColor" stroke-width="7" stroke-linecap="round"/><path d="M 16,22 C 14,34 11,48 8,62 C 5,74 2,84 0,91" stroke="currentColor" stroke-width="6.5" stroke-linecap="round"/><path d="M 50,20 C 52,32 53,47 55,62 C 58,74 63,84 68,91" stroke="currentColor" stroke-width="6.5" stroke-linecap="round"/></svg><span class="nm">Pen and Ink</span></span>
+    </a>
+    <div class="navright">
+      <ul class="menu">
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Services</a></li>
+        <li><a href="#">Our Portfolio</a></li>
+        <li><a href="#">Office</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Contact Us</a></li>
+      </ul>
+      <a class="enq" href="mailto:penandink.studio@gmail.com">Enquire</a>
+      <button class="burger">≡</button>
     </div>
-    <div class="r">
-      <span class="tag">Selected Work</span>
-      <a href="mailto:penandink.studio@gmail.com">Enquire</a>
-    </div>
-  </header>
+  </nav>
 
+  <!-- SLIDESHOW -->
   <main class="show" id="show">
-    <div class="slide on"><div class="frame"><img src="assets/ink/v-minimal-1.jpg" alt="The Atelier — pen &amp; ink"></div></div>
-    <div class="slide"><div class="frame"><img src="assets/ink/v-living-2.jpg" alt="Eastgate Apartment — pen &amp; ink"></div></div>
-    <div class="slide"><div class="frame"><img src="assets/ink/v-lounge-1.jpg" alt="Brook Lounge — pen &amp; ink"></div></div>
-    <div class="slide"><div class="frame"><img src="assets/ink/v-bedroom-1.jpg" alt="Hill House — pen &amp; ink"></div></div>
-    <div class="slide"><div class="frame"><img src="assets/ink/v-dining-1.jpg" alt="Quay Dining Room — pen &amp; ink"></div></div>
-    <div class="slide"><div class="frame"><img src="assets/ink/v-studio-1.jpg" alt="Foundry Studio — pen &amp; ink"></div></div>
+    <div class="slide on"><img src="assets/mono/m02.jpg" alt=""></div>
+    <div class="slide"><img src="assets/mono/m14.jpg" alt=""></div>
+    <div class="slide"><img src="assets/mono/n04.jpg" alt=""></div>
+    <div class="slide"><img src="assets/mono/m03.jpg" alt=""></div>
+    <div class="slide"><img src="assets/mono/m01.jpg" alt=""></div>
+    <div class="slide"><img src="assets/mono/m11.jpg" alt=""></div>
+    <div class="slide"><img src="assets/mono/m10.jpg" alt=""></div>
+    <div class="slide"><img src="assets/mono/n02.jpg" alt=""></div>
+    <div class="slide"><img src="assets/mono/n03.jpg" alt=""></div>
+    <div class="slide"><img src="assets/mono/m09.jpg" alt=""></div>
   </main>
 
-  <div class="meta">
-    <div class="no" id="mno">01 — 06</div>
-    <div class="t" id="mt">The Atelier</div>
-    <div class="s" id="ms">Studio · 2023</div>
-  </div>
-
-  <div class="dots" id="dots"></div>
+  <div class="count" id="count">01 / 10</div>
+  <div class="word in" id="word">Ascent</div>
+  <div class="prog" id="prog"><i id="progi"></i></div>
 
 <script>
   const hideLoader=()=>document.getElementById('loader').classList.add('done');
-  window.addEventListener('load',()=>setTimeout(hideLoader,1300));setTimeout(hideLoader,2800);
+  window.addEventListener('load',()=>setTimeout(hideLoader,1200));setTimeout(hideLoader,2800);
 
-  const data=[
-    {t:'The Atelier',        s:'Studio · 2023'},
-    {t:'Eastgate Apartment', s:'Living · 2024'},
-    {t:'Brook Lounge',       s:'Living · 2023'},
-    {t:'Hill House',         s:'Bedroom · 2024'},
-    {t:'Quay Dining Room',   s:'Dining · 2024'},
-    {t:'Foundry Studio',     s:'Workspace · 2022'},
-  ];
-  const slides=[...document.querySelectorAll('.slide')],dots=document.getElementById('dots');
-  const mno=document.getElementById('mno'),mt=document.getElementById('mt'),ms=document.getElementById('ms');
+  const words=['Ascent','Rise','Order','Edge','Curve','Flow','Rhythm','Mass','Form','Making'];
+  const slides=[...document.querySelectorAll('.slide')];
+  const word=document.getElementById('word'),count=document.getElementById('count'),progi=document.getElementById('progi');
   let i=0,timer;
-  slides.forEach((s,k)=>{const b=document.createElement('button');b.innerHTML='<i></i>';if(k===0)b.classList.add('on');b.onclick=()=>go(k);dots.appendChild(b);});
   function paint(){
     slides.forEach((s,k)=>s.classList.toggle('on',k===i));
-    [...dots.children].forEach((d,k)=>{d.classList.remove('on');void d.offsetWidth;d.classList.toggle('on',k===i);});
-    mno.textContent='0'+(i+1)+' — 0'+slides.length;mt.textContent=data[i].t;ms.textContent=data[i].s;
+    count.textContent='0'.repeat(i+1<10?1:0)+(i+1)+' / 10';
+    // word transition
+    word.classList.remove('in');
+    setTimeout(()=>{word.textContent=words[i];word.classList.add('in');},260);
+    // progress reset
+    progi.classList.remove('run');void progi.offsetWidth;progi.classList.add('run');
   }
   function go(k){i=(k+slides.length)%slides.length;paint();restart();}
-  function next(){go(i+1);}
-  function restart(){clearInterval(timer);timer=setInterval(next,5000);}
-  paint();restart();
+  function restart(){clearInterval(timer);timer=setInterval(()=>go(i+1),5000);}
+  // first run
+  progi.classList.add('run');restart();
   addEventListener('keydown',e=>{if(e.key==='ArrowRight')go(i+1);if(e.key==='ArrowLeft')go(i-1);});
 </script>
 </body>
