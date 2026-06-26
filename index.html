@@ -20,31 +20,30 @@
   a{text-decoration:none;color:inherit}
   .hide{display:none!important}
 
-  /* LOADER */
-  .loader{position:fixed;inset:0;z-index:70;background:#faf9f7;display:flex;align-items:center;justify-content:center;transition:opacity .9s,visibility .9s}
+  /* LOADER — π rising updraft with motion blur */
+  .loader{position:fixed;inset:0;z-index:70;background:#fbfaf8;display:flex;align-items:center;justify-content:center;overflow:hidden;transition:opacity .9s,visibility .9s}
   .loader.done{opacity:0;visibility:hidden}
-  .loader .lwrap{display:flex;flex-direction:column;align-items:center;gap:16px;opacity:0;animation:fin .9s ease .15s forwards}
-  .loader img{height:90px;width:auto}
-  .loader .fb{display:flex;align-items:center;gap:16px}
-  .loader .fb svg{width:40px;color:var(--ink)}
-  .loader .fb b{font-family:var(--script);font-size:62px;color:var(--ink)}
-  .loader .ln{width:160px;height:1px;background:var(--line);overflow:hidden}
-  .loader .ln i{display:block;height:100%;width:0;background:var(--ink);animation:ffill 1.3s ease .3s forwards}
-  @keyframes fin{to{opacity:1}}@keyframes ffill{to{width:100%}}
+  .loader img{height:170px;width:auto;will-change:transform,filter,opacity;
+    animation:updraft 4.2s cubic-bezier(.42,0,.32,1) forwards}
+  @keyframes updraft{
+    0%   {transform:translateY(46vh) scaleY(.9);opacity:0;filter:blur(0)}
+    14%  {transform:translateY(34vh) scaleY(1);opacity:1;filter:blur(0)}
+    55%  {transform:translateY(0) scaleY(1.16);opacity:1;filter:blur(2.5px)}
+    78%  {transform:translateY(-32vh) scaleY(1.3);opacity:.9;filter:blur(6px)}
+    100% {transform:translateY(-72vh) scaleY(1.5);opacity:0;filter:blur(14px)}
+  }
 
-  /* TRANSPARENT NAV — 20 % larger */
+  /* ── CONSTANT TRANSPARENT NAV (shared across all pages) ── */
   .nav{position:fixed;top:0;left:0;right:0;z-index:60;height:88px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;background:transparent;border:none}
-  .brand{display:flex;align-items:center;gap:12px;height:100%}
-  /* Homepage always uses SVG fallback (white, no background box) */
-  .brand .fb{display:flex;align-items:center;gap:11px}
-  .brand .fb svg{width:22px;color:#fff}
-  .brand .fb .nm{font-family:var(--script);font-size:30px;line-height:1;color:#fff}
-  /* Menu centred */
-  .menu{position:absolute;left:50%;transform:translateX(-50%);display:flex;gap:2px;list-style:none;white-space:nowrap}
-  .menu a{display:block;padding:10px 17px;font-size:15px;color:#fff;font-weight:700;letter-spacing:.02em;border-radius:7px;transition:background .2s}
-  .menu a:hover{background:rgba(255,255,255,.14)}
+  .nav::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.34) 0%,rgba(0,0,0,0) 100%)}
+  .brand{display:flex;align-items:center;height:100%}
+  .brand img{height:54px;width:auto;display:block;filter:drop-shadow(0 1px 6px rgba(0,0,0,.45))}
   .navright{display:flex;align-items:center}
-  .burger{display:none;background:none;border:none;font-size:26px;color:#fff}
+  .menu{display:flex;gap:2px;list-style:none;white-space:nowrap}
+  .menu a{display:block;padding:10px 17px;font-size:15px;color:#fff;font-weight:600;letter-spacing:.02em;border-radius:7px;transition:background .2s;text-shadow:0 1px 10px rgba(0,0,0,.4)}
+  .menu a:hover{background:rgba(255,255,255,.16)}
+  .menu a.active{background:rgba(255,255,255,.2)}
+  .burger{display:none;background:none;border:none;font-size:26px;color:#fff;cursor:pointer}
 
   /* FULLSCREEN SLIDESHOW */
   .show{position:fixed;inset:0;z-index:10;background:#111}
@@ -65,55 +64,32 @@
     text-shadow:0 2px 28px rgba(0,0,0,.35);
     opacity:0;transform:translateY(12px);transition:opacity .85s ease,transform .85s ease}
   .word.in{opacity:1;transform:none}
-  .dots{position:fixed;left:54px;bottom:calc(52px + clamp(38px,6.5vw,118px) + 20px);z-index:30;display:flex;gap:8px;align-items:center}
-  .dot{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.28);transition:background .45s,transform .45s;cursor:default}
-  .dot.on{background:rgba(255,255,255,.9);transform:scale(1.4)}
 
   @media(max-width:780px){
     .nav{padding:0 22px;height:70px}.menu{display:none}.burger{display:block}
-    .brand .fb svg{width:18px}.brand .fb .nm{font-size:24px}
+    .brand img{height:44px}
+    .loader img{height:120px}
     .word{left:24px;bottom:32px;font-size:clamp(30px,9vw,64px)}
-    .dots{left:26px;bottom:calc(32px + clamp(30px,9vw,64px) + 16px)}
   }
 </style>
 </head>
 <body>
 
-<!-- LOADER -->
+<!-- LOADER — π rising updraft -->
 <div class="loader" id="loader">
-  <div class="lwrap">
-    <img src="assets/logo.png" alt="Pen and Ink" onerror="this.classList.add('hide');this.nextElementSibling.classList.remove('hide')">
-    <div class="fb hide">
-      <svg viewBox="0 0 70 92" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M 3,32 C 18,18 38,14 58,22 C 64,25 66,28 64,32" stroke="currentColor" stroke-width="7" stroke-linecap="round"/>
-        <path d="M 16,22 C 14,34 11,48 8,62 C 5,74 2,84 0,91" stroke="currentColor" stroke-width="6.5" stroke-linecap="round"/>
-        <path d="M 50,20 C 52,32 53,47 55,62 C 58,74 63,84 68,91" stroke="currentColor" stroke-width="6.5" stroke-linecap="round"/>
-      </svg>
-      <b>Pen and Ink</b>
-    </div>
-    <div class="ln"><i></i></div>
-  </div>
+  <img src="assets/loader-pi.png" alt="Pen and Ink">
 </div>
 
-<!-- TRANSPARENT NAV — SVG brand always (no white-box PNG on dark bg) -->
+<!-- CONSTANT TRANSPARENT NAV -->
 <nav class="nav">
   <a class="brand" href="index.html">
-    <span class="fb">
-      <svg viewBox="0 0 70 92" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M 3,32 C 18,18 38,14 58,22 C 64,25 66,28 64,32" stroke="currentColor" stroke-width="7" stroke-linecap="round"/>
-        <path d="M 16,22 C 14,34 11,48 8,62 C 5,74 2,84 0,91" stroke="currentColor" stroke-width="6.5" stroke-linecap="round"/>
-        <path d="M 50,20 C 52,32 53,47 55,62 C 58,74 63,84 68,91" stroke="currentColor" stroke-width="6.5" stroke-linecap="round"/>
-      </svg>
-      <span class="nm">Pen and Ink</span>
-    </span>
+    <img src="assets/logo-white.png" alt="Pen and Ink — design studio">
   </a>
   <div class="navright">
     <ul class="menu">
-      <li><a href="about.html">About Us</a></li>
-      <li><a href="services.html">Services</a></li>
+      <li><a href="about.html">Our Philosophy</a></li>
       <li><a href="our-work.html">Our Work</a></li>
-      <li><a href="office.html">Office</a></li>
-      <li><a href="contact.html">Contact Us</a></li>
+      <li><a href="contact.html">Our Studio</a></li>
     </ul>
     <button class="burger">&#9776;</button>
   </div>
@@ -134,22 +110,14 @@
   <div class="slide"><img src="assets/mono/i11.jpg" alt=""></div>
 </main>
 
-<div class="dots" id="dots">
-  <span class="dot on"></span><span class="dot"></span><span class="dot"></span>
-  <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-  <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-  <span class="dot"></span><span class="dot"></span>
-</div>
 <div class="word in" id="word">Light</div>
 
 <script>
   const hideLoader=()=>document.getElementById('loader').classList.add('done');
-  window.addEventListener('load',()=>setTimeout(hideLoader,1200));
-  setTimeout(hideLoader,2800);
+  setTimeout(hideLoader,4200);
 
   const words=['Light','Still','Shelter','Grain','Depth','Form','Craft','Tone','Void','Ground','Good'];
   const slides=[...document.querySelectorAll('.slide')];
-  const dotEls=[...document.querySelectorAll('.dot')];
   const word=document.getElementById('word');
   let i=0, timer, goTimer;
 
@@ -168,7 +136,6 @@
       prevImg.style.transform='scale(1.02) translateX(0%)';
       requestAnimationFrame(()=>requestAnimationFrame(()=>{prevImg.style.transition='';}));
       slides[i].classList.add('on');
-      dotEls.forEach((d,j)=>d.classList.toggle('on',j===i));
       setTimeout(()=>{word.textContent=words[i];word.classList.add('in');},200);
     },500);
     restart();

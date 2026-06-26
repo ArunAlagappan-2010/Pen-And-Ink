@@ -9,194 +9,98 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Great+Vibes&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#1a1a1a; --soft:#7a7a7a; --line:#e0ded8;
-    --bg:#f0eeeb; --nav-h:88px;
+    --soft:#b9b6b0; --nav-h:88px;
     --sans:'SF Pro Display','Helvetica Neue','Segoe UI',Arial,sans-serif;
     --script:'Great Vibes',cursive;
     --display:'Cormorant Garamond',serif;
   }
   *{margin:0;padding:0;box-sizing:border-box}
-  html,body{min-height:100%;background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+  html,body{min-height:100%;background:#0d0d0d;color:#fff;font-family:var(--sans);-webkit-font-smoothing:antialiased}
   a{text-decoration:none;color:inherit}
   img{display:block}
 
-  /* grain texture overlay */
-  body::before{
-    content:"";position:fixed;inset:0;pointer-events:none;z-index:2000;
-    background-image:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='250' height='250'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='250' height='250' filter='url(%23n)' opacity='0.065'/></svg>");
-    opacity:.85;
-  }
-
-  /* ── NAV (light frosted glass) ── */
-  .nav{
-    position:fixed;top:0;left:0;right:0;z-index:60;
-    height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;
-    padding:0 48px;
-    background:rgba(240,238,235,.88);
-    backdrop-filter:saturate(160%) blur(22px);
-    -webkit-backdrop-filter:saturate(160%) blur(22px);
-    border-bottom:1px solid rgba(0,0,0,.07);
-  }
-  .brand{display:flex;align-items:center;gap:12px;height:100%}
-  .brand .logo-img{height:48px;width:auto}
-  .brand .fb{display:flex;align-items:center;gap:10px}
-  .brand .fb svg{width:20px;color:var(--ink)}
-  .brand .fb .nm{font-family:var(--script);font-size:28px;line-height:1;color:var(--ink)}
-  .menu{position:absolute;left:50%;transform:translateX(-50%);display:flex;gap:2px;list-style:none;white-space:nowrap}
-  .menu a{display:block;padding:10px 17px;font-size:15px;color:var(--ink);font-weight:600;letter-spacing:.02em;border-radius:7px;transition:background .2s}
-  .menu a:hover{background:rgba(0,0,0,.07)}
-  .menu a.active{background:rgba(0,0,0,.09)}
+  /* ── CONSTANT TRANSPARENT NAV (shared across all pages) ── */
+  .nav{position:fixed;top:0;left:0;right:0;z-index:60;height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding:0 48px;background:transparent;border:none}
+  .nav::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.45) 0%,rgba(0,0,0,0) 100%)}
+  .brand{display:flex;align-items:center;height:100%}
+  .brand img{height:54px;width:auto;display:block;filter:drop-shadow(0 1px 6px rgba(0,0,0,.45))}
   .navright{display:flex;align-items:center}
-  .burger{display:none;background:none;border:none;font-size:26px;color:var(--ink);cursor:pointer}
+  .menu{display:flex;gap:2px;list-style:none;white-space:nowrap}
+  .menu a{display:block;padding:10px 17px;font-size:15px;color:#fff;font-weight:600;letter-spacing:.02em;border-radius:7px;transition:background .2s;text-shadow:0 1px 10px rgba(0,0,0,.4)}
+  .menu a:hover{background:rgba(255,255,255,.16)}
+  .menu a.active{background:rgba(255,255,255,.2)}
+  .burger{display:none;background:none;border:none;font-size:26px;color:#fff;cursor:pointer}
 
   /* ── PAGE HERO ── */
-  .hero{
-    padding:calc(var(--nav-h) + 70px) 64px 54px;
-    border-bottom:1px solid var(--line);
-  }
-  .hero h1{
-    font-family:var(--display);font-style:italic;font-weight:300;
-    font-size:clamp(44px,6vw,90px);letter-spacing:.01em;line-height:.9;
-    color:var(--ink);
-  }
-  .hero p{
-    margin-top:20px;font-size:15px;color:var(--soft);letter-spacing:.03em;
-    max-width:440px;line-height:1.55;
-  }
+  .hero{padding:calc(var(--nav-h) + 70px) 64px 44px}
+  .hero h1{font-family:var(--display);font-style:italic;font-weight:300;font-size:clamp(44px,6vw,90px);letter-spacing:.01em;line-height:.9;color:#fff}
+  .hero p{margin-top:18px;font-size:15px;color:var(--soft);letter-spacing:.03em;max-width:460px;line-height:1.55}
 
-  /* ── GALLERY GRID ── */
+  /* ── 3 × 3 GRID ── */
   .gallery{
-    padding:36px 40px 96px;
+    padding:8px 64px 100px;
     display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:10px;
+    grid-template-columns:repeat(3,1fr);
+    gap:14px;
+    max-width:1280px;
   }
-  .gi{
-    position:relative;aspect-ratio:3/2;overflow:hidden;cursor:pointer;
-    background:#d0cec9;
-  }
+  .gi{position:relative;aspect-ratio:3/2;overflow:hidden;cursor:pointer;background:#1a1a1a;border-radius:4px}
   .gi img{
     width:100%;height:100%;object-fit:cover;
-    transition:transform .6s cubic-bezier(.25,.46,.45,.94),filter .42s ease;
-    will-change:transform;
+    filter:grayscale(1) contrast(1.02);
+    transition:filter .5s ease,transform .6s cubic-bezier(.25,.46,.45,.94);
+    will-change:transform,filter;
   }
-  .gi:hover img{transform:scale(1.042)}
-
-  /* last-row colour reveal */
-  .gi.last-row img{filter:grayscale(1)}
-  .gi.last-row:hover img{filter:grayscale(0)}
-  .gi.last-row.revealed img{filter:grayscale(0)!important}
-
-  /* subtle hover label */
+  /* hover → return to original colour */
+  .gi:hover img{filter:grayscale(0);transform:scale(1.045)}
   .gi .gi-label{
-    position:absolute;bottom:0;left:0;right:0;
-    padding:28px 16px 12px;
-    background:linear-gradient(0deg,rgba(0,0,0,.55) 0%,transparent 100%);
+    position:absolute;left:0;right:0;bottom:0;padding:26px 16px 13px;
+    background:linear-gradient(0deg,rgba(0,0,0,.6) 0%,transparent 100%);
     opacity:0;transition:opacity .3s ease;
   }
   .gi:hover .gi-label{opacity:1}
-  .gi .gi-label span{
-    font-family:var(--display);font-style:italic;font-weight:300;
-    font-size:16px;color:#fff;letter-spacing:.02em;
-  }
+  .gi .gi-label span{font-family:var(--display);font-style:italic;font-weight:300;font-size:17px;color:#fff;letter-spacing:.02em}
 
-  /* ── LIGHTBOX ── */
-  .lb{
-    position:fixed;inset:0;z-index:50;
-    display:flex;align-items:center;justify-content:center;
-    opacity:0;pointer-events:none;transition:opacity .35s ease;
-  }
+  /* ── LIGHTBOX: enlarge to 75% with blurred backdrop ── */
+  .lb{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .35s ease}
   .lb.open{opacity:1;pointer-events:all}
+  .lb-bg{position:absolute;inset:0;background:rgba(8,8,8,.5);
+    backdrop-filter:blur(20px) brightness(.55);-webkit-backdrop-filter:blur(20px) brightness(.55)}
+  .lb-figure{position:relative;z-index:51;max-width:75vw;max-height:75vh;
+    transform:scale(.92);transition:transform .35s cubic-bezier(.25,.46,.45,.94)}
+  .lb.open .lb-figure{transform:scale(1)}
+  .lb-figure img{max-width:75vw;max-height:75vh;width:auto;height:auto;object-fit:contain;
+    box-shadow:0 40px 110px rgba(0,0,0,.6);border-radius:3px}
+  .lb-cap{position:absolute;left:0;right:0;bottom:0;padding:34px 28px 20px;
+    background:linear-gradient(0deg,rgba(0,0,0,.66) 0%,transparent 100%);pointer-events:none}
+  .lb-cap h2{font-family:var(--display);font-style:italic;font-weight:300;font-size:clamp(22px,3vw,42px);color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.4)}
+  .lb-cap .meta{margin-top:6px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#cfccc6}
+  .lb-close{position:absolute;top:calc(var(--nav-h) + 8px);right:26px;z-index:52;
+    background:rgba(0,0,0,.32);border:none;border-radius:50%;width:40px;height:40px;
+    font-size:20px;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s}
+  .lb-close:hover{background:rgba(0,0,0,.55)}
 
-  .lb-bg{
-    position:absolute;inset:0;
-    background:rgba(10,10,10,.48);
-    backdrop-filter:blur(14px) brightness(.55);
-    -webkit-backdrop-filter:blur(14px) brightness(.55);
-  }
-
-  .lb-panel{
-    position:relative;z-index:51;
-    width:75vw;height:85vh;
-    background:#fff;
-    display:flex;flex-direction:column;
-    overflow:hidden;
-    box-shadow:0 48px 96px rgba(0,0,0,.28),0 4px 24px rgba(0,0,0,.14);
-  }
-
-  .lb-img-wrap{
-    position:relative;flex:1;min-height:0;overflow:hidden;background:#222;
-  }
-  .lb-img{
-    width:100%;height:100%;object-fit:cover;display:block;
-    transition:opacity .3s ease;
-  }
-  .lb-name-overlay{
-    position:absolute;bottom:0;left:0;right:0;
-    padding:32px 36px 22px;
-    background:linear-gradient(0deg,rgba(0,0,0,.64) 0%,transparent 100%);
-    pointer-events:none;
-  }
-  .lb-name-overlay h2{
-    font-family:var(--display);font-style:italic;font-weight:300;
-    font-size:clamp(24px,3.2vw,50px);color:#fff;letter-spacing:.02em;
-    text-shadow:0 2px 12px rgba(0,0,0,.3);
-  }
-
-  .lb-bar{
-    padding:18px 36px 20px;
-    border-top:1px solid #e8e5e0;
-    background:#fff;
-    display:flex;gap:36px;align-items:flex-start;flex-shrink:0;
-  }
-  .lb-meta-col{min-width:160px}
-  .lb-type{
-    font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;
-    color:var(--soft);margin-bottom:4px;
-  }
-  .lb-city-year{font-size:13px;color:var(--ink);font-weight:500}
-  .lb-desc{font-size:13.5px;color:#555;line-height:1.55;flex:1;margin-top:2px}
-
-  .lb-close{
-    position:absolute;top:16px;right:20px;
-    background:rgba(0,0,0,.28);border:none;border-radius:50%;
-    width:36px;height:36px;font-size:20px;line-height:1;
-    color:#fff;cursor:pointer;z-index:2;
-    display:flex;align-items:center;justify-content:center;
-    transition:background .2s;
-  }
-  .lb-close:hover{background:rgba(0,0,0,.5)}
-
-  /* ── RESPONSIVE ── */
   @media(max-width:900px){
-    .gallery{grid-template-columns:repeat(2,1fr);padding:24px 20px 60px}
-    .hero{padding:calc(var(--nav-h)+40px) 24px 36px}
-    .nav{padding:0 22px;height:70px;--nav-h:70px}
-    .menu{display:none}.burger{display:block}
-    .lb-panel{width:96vw;height:92vh}
-    .lb-bar{flex-direction:column;gap:8px}
+    .nav{padding:0 22px;height:70px;--nav-h:70px}.menu{display:none}.burger{display:block}
+    .hero{padding:calc(70px+44px) 24px 28px}
+    .gallery{grid-template-columns:repeat(2,1fr);padding:6px 20px 70px;gap:10px}
+    .lb-figure,.lb-figure img{max-width:92vw;max-height:80vh}
   }
+  @media(max-width:560px){.gallery{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
+<!-- CONSTANT TRANSPARENT NAV -->
 <nav class="nav">
   <a class="brand" href="index.html">
-    <img src="assets/logo.png" alt="Pen and Ink" class="logo-img"
-         onerror="this.classList.add('hide');this.nextElementSibling.classList.remove('hide')">
-    <span class="fb hide">
-      <svg viewBox="0 0 70 92" fill="none"><path d="M 3,32 C 18,18 38,14 58,22 C 64,25 66,28 64,32" stroke="currentColor" stroke-width="7" stroke-linecap="round"/><path d="M 16,22 C 14,34 11,48 8,62 C 5,74 2,84 0,91" stroke="currentColor" stroke-width="6.5" stroke-linecap="round"/><path d="M 50,20 C 52,32 53,47 55,62 C 58,74 63,84 68,91" stroke="currentColor" stroke-width="6.5" stroke-linecap="round"/></svg>
-      <span class="nm">Pen and Ink</span>
-    </span>
+    <img src="assets/logo-white.png" alt="Pen and Ink — design studio">
   </a>
   <div class="navright">
     <ul class="menu">
-      <li><a href="about.html">About Us</a></li>
-      <li><a href="services.html">Services</a></li>
+      <li><a href="about.html">Our Philosophy</a></li>
       <li><a href="our-work.html" class="active">Our Work</a></li>
-      <li><a href="office.html">Office</a></li>
-      <li><a href="contact.html">Contact Us</a></li>
+      <li><a href="contact.html">Our Studio</a></li>
     </ul>
     <button class="burger">&#9776;</button>
   </div>
@@ -208,106 +112,67 @@
   <p>A selected portfolio across architecture, interiors, and urbanism — spaces drawn from lived experience and built with precision.</p>
 </section>
 
-<!-- GALLERY -->
+<!-- 3 × 3 GALLERY -->
 <section class="gallery" id="gallery"></section>
 
 <!-- LIGHTBOX -->
 <div class="lb" id="lb" role="dialog" aria-modal="true">
   <div class="lb-bg" id="lb-bg"></div>
-  <div class="lb-panel">
-    <button class="lb-close" id="lb-close" aria-label="Close">&#x2715;</button>
-    <div class="lb-img-wrap">
-      <img class="lb-img" id="lb-img" src="" alt="">
-      <div class="lb-name-overlay">
-        <h2 id="lb-name"></h2>
-      </div>
-    </div>
-    <div class="lb-bar">
-      <div class="lb-meta-col">
-        <div class="lb-type" id="lb-type"></div>
-        <div class="lb-city-year" id="lb-city-year"></div>
-      </div>
-      <p class="lb-desc" id="lb-desc"></p>
-    </div>
-  </div>
+  <button class="lb-close" id="lb-close" aria-label="Close">&#x2715;</button>
+  <figure class="lb-figure">
+    <img id="lb-img" src="" alt="">
+    <figcaption class="lb-cap">
+      <h2 id="lb-name"></h2>
+      <div class="meta" id="lb-meta"></div>
+    </figcaption>
+  </figure>
 </div>
 
 <script>
 const projects = [
-  { name:"Bespoke Residence",    type:"Architecture", city:"Chennai",    year:"2023", desc:"A private family home integrating raw concrete with warm timber to create a sanctuary of contrasts, where every detail is considered and nothing is incidental." },
-  { name:"Studio Loft",          type:"Interiors",    city:"Bengaluru",  year:"2022", desc:"An adaptive reuse of a heritage warehouse reimagined as a creative studio and living space, retaining the patina of the original while layering new purpose." },
-  { name:"The Terraced House",   type:"Architecture", city:"Mumbai",     year:"2024", desc:"A terraced urban home that negotiates the density of the city with open sky and cascading greenery, carving light through a constrained footprint." },
-  { name:"Garden Pavilion",      type:"Urbanism",     city:"Coimbatore", year:"2023", desc:"An outdoor living pavilion that dissolves the boundary between landscape and architecture, structured around shade, breeze, and the rhythm of seasons." },
-  { name:"The Atelier",          type:"Interiors",    city:"Chennai",    year:"2022", desc:"A bespoke design studio conceived as a refined and contemplative work environment — spare without being cold, ordered without being rigid." },
-  { name:"Coastal Retreat",      type:"Architecture", city:"Pondicherry",year:"2023", desc:"A beachside villa defined by sea breezes, salt-washed walls, and the geometry of shade — built to age gracefully alongside the coast." },
-  { name:"The Urban Loft",       type:"Interiors",    city:"Bengaluru",  year:"2024", desc:"A city-centre apartment rethought as an expansive loft, stripping back layers of finish to reveal the honest materiality beneath." },
-  { name:"Heritage Villa",       type:"Architecture", city:"Chennai",    year:"2021", desc:"A sensitive restoration of a colonial-era bungalow that preserves heritage character while quietly introducing contemporary ways of living." },
-  { name:"The Skyhouse",         type:"Architecture", city:"Mumbai",     year:"2023", desc:"A penthouse residence suspended above the city, its glass-edged terraces framing the skyline as an ever-changing panoramic artwork." },
-  { name:"Minimal Studio",       type:"Interiors",    city:"Hyderabad",  year:"2022", desc:"A recording and production studio designed for acoustic precision with an atmosphere of focused calm — material and spatial decisions inseparable from function." },
-  { name:"The Garden Home",      type:"Architecture", city:"Coimbatore", year:"2023", desc:"A home that grows outward into its landscape, with stepped terraces, planted courts, and canopies of tropical foliage bridging interior and exterior." },
-  { name:"Corporate Tower",      type:"Interiors",    city:"Chennai",    year:"2024", desc:"A corporate office interior reimagined as a workplace that earns attention through quality rather than novelty — one that inspires both collaboration and deep focus." },
-  { name:"The Annexe",           type:"Architecture", city:"Ooty",       year:"2022", desc:"A guest annexe set into the hillside and clad in local stone, breathing with the mist of the Nilgiris and retreating into its setting." },
-  { name:"River House",          type:"Architecture", city:"Kochi",      year:"2023", desc:"A waterfront home that opens entirely toward the river, every room mediating between water, shifting light, and the soft edge between land and tide." },
-  { name:"The White House",      type:"Architecture", city:"Goa",        year:"2024", desc:"A minimalist villa rendered in bleached lime plaster, a quiet counterpoint to the lushness that surrounds it — stillness within abundance." },
-  { name:"The Artist's Den",     type:"Interiors",    city:"Bengaluru",  year:"2022", desc:"A live-work studio for a visual artist, designed to hold both the productive chaos of creation and the restorative clarity of rest in equal measure." },
-  { name:"Copper House",         type:"Architecture", city:"Chennai",    year:"2023", desc:"A contemporary home clad in weathered copper panels that shift tone and texture with the light, the weather, and the slow passage of seasons." },
-  { name:"The Red Room",         type:"Interiors",    city:"Mumbai",     year:"2024", desc:"A restaurant interior conceived around a deep vermillion palette, drama, and the ritual of dining — a room that performs as theatre and shelter at once." },
-  { name:"Monsoon House",        type:"Architecture", city:"Kerala",     year:"2023", desc:"A tropical home designed around rain: channels, tanks, and generous overhangs that celebrate the monsoon cycle rather than shield against it." },
-  { name:"The Golden Studio",    type:"Interiors",    city:"Chennai",    year:"2024", desc:"A jewellery showroom defined by warm brass, velvet, and precise directional light — a setting built to honour and elevate the objects it holds." },
+  { name:"Bespoke Residence",  type:"Architecture", city:"Chennai",     year:"2023" },
+  { name:"Studio Loft",        type:"Interiors",    city:"Bengaluru",   year:"2022" },
+  { name:"The Terraced House", type:"Architecture", city:"Mumbai",      year:"2024" },
+  { name:"Garden Pavilion",    type:"Urbanism",     city:"Coimbatore",  year:"2023" },
+  { name:"The Atelier",        type:"Interiors",    city:"Chennai",     year:"2022" },
+  { name:"Coastal Retreat",    type:"Architecture", city:"Pondicherry", year:"2023" },
+  { name:"The Urban Loft",     type:"Interiors",    city:"Bengaluru",   year:"2024" },
+  { name:"Heritage Villa",     type:"Architecture", city:"Chennai",     year:"2021" },
+  { name:"The Skyhouse",       type:"Architecture", city:"Mumbai",      year:"2023" },
 ];
 
-const LAST_ROW_START = 16; // indices 16-19 are last row (colour-reveal)
+const imgSrc = i => `assets/gallery/g${String(i+1).padStart(2,'0')}.jpg`;
 
-// build gallery
+// build the 3×3 grid
 const gal = document.getElementById('gallery');
 projects.forEach((p, idx) => {
-  const isLast = idx >= LAST_ROW_START;
   const d = document.createElement('div');
-  d.className = 'gi' + (isLast ? ' last-row' : '');
-  d.dataset.idx = idx;
-  const imgSrc = `assets/gallery/g${String(idx+1).padStart(2,'0')}.jpg`;
-  d.innerHTML = `
-    <img src="${imgSrc}" alt="${p.name}" loading="lazy">
+  d.className = 'gi';
+  d.innerHTML = `<img src="${imgSrc(idx)}" alt="${p.name}" loading="lazy">
     <div class="gi-label"><span>${p.name}</span></div>`;
-  d.addEventListener('click', () => openLb(idx, d));
+  d.addEventListener('click', () => openLb(idx));
   gal.appendChild(d);
 });
 
 // lightbox
-const lb    = document.getElementById('lb');
-const lbImg = document.getElementById('lb-img');
-const lbName= document.getElementById('lb-name');
-const lbType= document.getElementById('lb-type');
-const lbCY  = document.getElementById('lb-city-year');
-const lbDesc= document.getElementById('lb-desc');
+const lb     = document.getElementById('lb');
+const lbImg  = document.getElementById('lb-img');
+const lbName = document.getElementById('lb-name');
+const lbMeta = document.getElementById('lb-meta');
 
-let currentIsLastRow = false;
-
-function openLb(idx, item) {
+function openLb(idx){
   const p = projects[idx];
-  const isLast = idx >= LAST_ROW_START;
-  currentIsLastRow = isLast;
-  const src = isLast
-    ? `assets/gallery/g${String(idx+1).padStart(2,'0')}-orig.jpg`
-    : `assets/gallery/g${String(idx+1).padStart(2,'0')}.jpg`;
-
-  // if last row, mark as revealed (keeps colour in grid too)
-  if (isLast && item) item.classList.add('revealed');
-
-  lbImg.src = src;
+  lbImg.src = imgSrc(idx);
+  lbImg.alt = p.name;
   lbName.textContent = p.name;
-  lbType.textContent = p.type;
-  lbCY.textContent   = p.city + ' · ' + p.year;
-  lbDesc.textContent = p.desc;
+  lbMeta.textContent = p.type + ' · ' + p.city + ' · ' + p.year;
   lb.classList.add('open');
   document.body.style.overflow = 'hidden';
 }
-
-function closeLb() {
+function closeLb(){
   lb.classList.remove('open');
   document.body.style.overflow = '';
 }
-
 document.getElementById('lb-close').addEventListener('click', closeLb);
 document.getElementById('lb-bg').addEventListener('click', closeLb);
 document.addEventListener('keydown', e => { if(e.key==='Escape') closeLb(); });
