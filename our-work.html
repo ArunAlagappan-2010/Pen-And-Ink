@@ -25,10 +25,10 @@
   .brand{display:flex;align-items:center;height:100%}
   .brand img{height:54px;width:auto;display:block;filter:drop-shadow(0 1px 6px rgba(0,0,0,.45))}
   .navright{display:flex;align-items:center}
-  .menu{display:flex;gap:2px;list-style:none;white-space:nowrap}
-  .menu a{display:block;padding:10px 17px;font-size:15px;color:#fff;font-weight:600;letter-spacing:.02em;border-radius:7px;transition:background .2s;text-shadow:0 1px 10px rgba(0,0,0,.4)}
-  .menu a:hover{background:rgba(255,255,255,.16)}
-  .menu a.active{background:rgba(255,255,255,.2)}
+  .menu{position:absolute;left:50%;transform:translateX(-50%);display:flex;gap:2px;list-style:none;white-space:nowrap}
+  .menu a{display:block;padding:10px 17px;font-size:15px;color:#fff;font-weight:600;letter-spacing:.02em;transition:text-shadow .25s;text-shadow:0 1px 10px rgba(0,0,0,.4)}
+  .menu a:hover{text-shadow:0 0 22px rgba(255,255,255,.9),0 1px 8px rgba(0,0,0,.3)}
+  .menu a.active{text-shadow:0 0 18px rgba(255,255,255,.65)}
   .burger{display:none;background:none;border:none;font-size:26px;color:#fff;cursor:pointer}
 
   /* ── PAGE HERO ── */
@@ -96,12 +96,12 @@
   <a class="brand" href="index.html">
     <img src="assets/logo-white.png" alt="Pen and Ink — design studio">
   </a>
+  <ul class="menu">
+    <li><a href="about.html">Our Philosophy</a></li>
+    <li><a href="our-work.html" class="active">Our Work</a></li>
+    <li><a href="contact.html">Our Studio</a></li>
+  </ul>
   <div class="navright">
-    <ul class="menu">
-      <li><a href="about.html">Our Philosophy</a></li>
-      <li><a href="our-work.html" class="active">Our Work</a></li>
-      <li><a href="contact.html">Our Studio</a></li>
-    </ul>
     <button class="burger">&#9776;</button>
   </div>
 </nav>
