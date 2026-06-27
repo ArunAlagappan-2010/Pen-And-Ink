@@ -20,18 +20,15 @@
   a{text-decoration:none;color:inherit}
   .hide{display:none!important}
 
-  /* LOADER — π rising updraft with motion blur */
-  .loader{position:fixed;inset:0;z-index:70;background:#fbfaf8;display:flex;align-items:center;justify-content:center;overflow:hidden;transition:opacity .9s,visibility .9s}
+  /* LOADER */
+  .loader{position:fixed;inset:0;z-index:70;background:#0d0d0d;display:flex;align-items:center;justify-content:center;overflow:hidden;transition:opacity .7s ease,visibility .7s}
   .loader.done{opacity:0;visibility:hidden}
-  .loader img{height:170px;width:auto;will-change:transform,filter,opacity;
-    animation:updraft 4.2s cubic-bezier(.42,0,.32,1) forwards}
-  @keyframes updraft{
-    0%   {transform:translateY(46vh) scaleY(.9);opacity:0;filter:blur(0)}
-    14%  {transform:translateY(34vh) scaleY(1);opacity:1;filter:blur(0)}
-    55%  {transform:translateY(0) scaleY(1.16);opacity:1;filter:blur(2.5px)}
-    78%  {transform:translateY(-32vh) scaleY(1.3);opacity:.9;filter:blur(6px)}
-    100% {transform:translateY(-72vh) scaleY(1.5);opacity:0;filter:blur(14px)}
-  }
+  .lw{display:flex;flex-direction:column;align-items:center;gap:22px}
+  .lw img{height:150px;width:auto;animation:lrise .5s cubic-bezier(.22,.82,.36,1) both}
+  @keyframes lrise{from{transform:translateY(28px);opacity:0}to{transform:translateY(0);opacity:1}}
+  .ltype{font-family:var(--sans);font-size:11px;letter-spacing:.22em;color:rgba(255,255,255,.45);
+    text-align:center;white-space:nowrap;min-height:16px;opacity:0;transition:opacity .2s}
+  .ltype.vis{opacity:1}
 
   /* ── CONSTANT TRANSPARENT NAV (shared across all pages) ── */
   .nav{position:fixed;top:0;left:0;right:0;z-index:60;height:88px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;background:transparent;border:none}
@@ -75,9 +72,12 @@
 </head>
 <body>
 
-<!-- LOADER — π rising updraft -->
+<!-- LOADER -->
 <div class="loader" id="loader">
-  <img src="assets/loader-pi.png" alt="Pen and Ink">
+  <div class="lw">
+    <img src="assets/loader-pi.png" alt="Pen and Ink">
+    <div class="ltype" id="ltype"></div>
+  </div>
 </div>
 
 <!-- CONSTANT TRANSPARENT NAV -->
@@ -113,8 +113,19 @@
 <div class="word in" id="word">Light</div>
 
 <script>
-  const hideLoader=()=>document.getElementById('loader').classList.add('done');
-  setTimeout(hideLoader,4200);
+  // Loader: logo rises in 0.5s, text types fast below, loader gone by ~2s total
+  (function(){
+    const loader = document.getElementById('loader');
+    const ltEl   = document.getElementById('ltype');
+    const msg    = 'E V E R Y  S P A C E  H A S  A  P U L S E .   E V E R Y  B U I L D I N G  H A S  A  V O I C E .';
+    setTimeout(()=>{
+      ltEl.classList.add('vis');
+      let c=0;
+      const tick=()=>{ltEl.textContent=msg.slice(0,++c);if(c<msg.length)setTimeout(tick,16);};
+      tick();
+    },580);
+    setTimeout(()=>loader.classList.add('done'),2100);
+  })();
 
   const words=['Light','Still','Shelter','Grain','Depth','Form','Craft','Tone','Void','Ground','Good'];
   const slides=[...document.querySelectorAll('.slide')];
