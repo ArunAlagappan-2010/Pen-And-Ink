@@ -148,18 +148,26 @@
   }
   .map-frame:hover iframe{filter:grayscale(0)}
 
-  /* info panel — two columns to fill the space beside the map */
+  /* map + form side by side */
+  .contact-cols{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    gap:clamp(28px,4vw,56px);
+    align-items:start;
+  }
+  .contact-cols .map-frame{max-width:none;width:100%}
+  .contact-cols .form-card{max-width:none;width:100%;margin:0}
+
+  /* info panel — single readable line below the map + form */
   .studio-info{
     display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:clamp(22px,2.4vw,38px) clamp(32px,3.5vw,60px);
+    grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+    gap:clamp(20px,2.5vw,44px);
     width:100%;
+    margin-top:clamp(36px,5vh,64px);
+    padding-top:clamp(26px,3.5vh,42px);
+    border-top:1px solid rgba(255,255,255,.16);
   }
-  .studio-info .info-block{
-    padding-top:clamp(14px,1.8vh,20px);
-    border-top:1px solid rgba(255,255,255,.1);
-  }
-  .studio-info .info-block:last-child{grid-column:1/-1}
   .info-sep{display:none}
   .info-lbl{
     font-size:clamp(10px,.7vw,11.5px);letter-spacing:.18em;text-transform:uppercase;
@@ -233,7 +241,8 @@
   @media(max-width:1023px){
     .studio{padding:56px 32px}
     .studio-cols{grid-template-columns:1fr;gap:40px}
-    .studio-info{grid-template-columns:1fr 1fr;gap:22px 40px}
+    .contact-cols{grid-template-columns:1fr;gap:32px}
+    .studio-info{gap:22px 32px}
     .info-sep{display:none}
     .map-frame{aspect-ratio:16/9}
     .form-row{grid-template-columns:1fr 1fr}
@@ -249,7 +258,7 @@
     .hero{min-height:100svh}
     .hero-promise{line-height:1.75}
     .studio,.form-wrap{padding-left:20px;padding-right:20px}
-    .studio-info{grid-template-columns:1fr}
+    .studio-info{grid-template-columns:repeat(2,minmax(0,1fr))}
     .form-row{grid-template-columns:1fr}
     .form-card{padding:24px 18px}
   }
@@ -353,67 +362,16 @@
     <h2 class="sec-h">The Studio</h2>
   </div>
 
-  <div class="studio-cols">
+  <div class="contact-cols">
     <div class="map-frame">
       <iframe
-        src="https://www.google.com/maps?q=Nungambakkam,Chennai,Tamil+Nadu,India&z=14&output=embed"
+        src="https://www.google.com/maps?q=13.0469777,80.2407635&z=16&output=embed"
         loading="lazy"
         referrerpolicy="no-referrer-when-downgrade"
-        title="Pen and Ink Studio — Chennai"></iframe>
+        title="Pen and Ink Studio — T. Nagar, Chennai"></iframe>
     </div>
 
-    <div class="studio-info">
-    <div class="info-block">
-      <div class="info-lbl">Address</div>
-      <div class="info-val">Nungambakkam<br>Chennai, Tamil Nadu<br>India</div>
-    </div>
-    <div class="info-sep"></div>
-    <div class="info-block">
-      <div class="info-lbl">Studio Hours</div>
-      <dl class="hours">
-        <dt>Mon – Fri</dt><dd>9:30 am – 6:30 pm</dd>
-        <dt>Saturday</dt><dd>10:00 am – 2:00 pm</dd>
-        <dt>Sunday</dt><dd>Closed</dd>
-      </dl>
-    </div>
-    <div class="info-sep"></div>
-    <div class="info-block">
-      <div class="info-lbl">Phone</div>
-      <div class="info-val">
-        <a href="tel:+914445999608">044 4599 9608</a><br>
-        <a href="tel:+919600049884">+91 96000 49884</a>
-      </div>
-    </div>
-    <div class="info-block">
-      <div class="info-lbl">Email</div>
-      <div class="info-val">
-        <a href="mailto:reachus@penandink.co.in">reachus@penandink.co.in</a>
-      </div>
-    </div>
-    <div class="info-block">
-      <div class="info-lbl">Instagram</div>
-      <div class="info-val"><a href="https://www.instagram.com/penandinkdesignstudio/" target="_blank" rel="noopener">@penandinkdesignstudio</a></div>
-    </div>
-    <div class="info-sep"></div>
-    <div class="info-block">
-      <div class="info-lbl">Getting Here</div>
-      <div class="info-val" style="font-size:clamp(12px,.9vw,14px);color:rgba(255,255,255,.55);line-height:1.75">
-        10-minute walk from Nungambakkam Metro Station (Green Line). Street parking available on Wallace Garden Second Street. Visits by appointment.
-      </div>
-    </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ CONTACT FORM ═══ -->
-<section class="form-wrap">
-  <div class="form-hdr">
-    <p class="sec-tag">Start a Conversation</p>
-    <h2 class="sec-h">Get in Touch</h2>
-    <p>We welcome enquiries from clients, collaborators, and anyone interested in thoughtful design. Tell us about your project below.</p>
-  </div>
-
-  <div class="form-card">
+    <div class="form-card">
     <form id="contactForm">
       <input type="hidden" name="access_key" value="6f8c37dd-370b-45bd-ad45-7a64cb052e58">
       <input type="hidden" name="subject" value="New enquiry — Pen and Ink website">
@@ -454,6 +412,39 @@
       <button type="submit" class="submit-btn">Send Message</button>
       <p class="form-note" id="form-note">We'll reply to your email as soon as we can.</p>
     </form>
+    </div>
+  </div>
+
+  <div class="studio-info">
+    <div class="info-block">
+      <div class="info-lbl">Address</div>
+      <div class="info-val">Chinnaya Street, T. Nagar<br>Chennai, Tamil Nadu 600017<br>India</div>
+    </div>
+    <div class="info-block">
+      <div class="info-lbl">Studio Hours</div>
+      <dl class="hours">
+        <dt>Mon – Fri</dt><dd>9:30 am – 6:30 pm</dd>
+        <dt>Saturday</dt><dd>10:00 am – 2:00 pm</dd>
+        <dt>Sunday</dt><dd>Closed</dd>
+      </dl>
+    </div>
+    <div class="info-block">
+      <div class="info-lbl">Phone</div>
+      <div class="info-val">
+        <a href="tel:+914445999608">044 4599 9608</a><br>
+        <a href="tel:+919600049884">+91 96000 49884</a>
+      </div>
+    </div>
+    <div class="info-block">
+      <div class="info-lbl">Email</div>
+      <div class="info-val">
+        <a href="mailto:reachus@penandink.co.in">reachus@penandink.co.in</a>
+      </div>
+    </div>
+    <div class="info-block">
+      <div class="info-lbl">Instagram</div>
+      <div class="info-val"><a href="https://www.instagram.com/penandinkdesignstudio/" target="_blank" rel="noopener">@penandinkdesignstudio</a></div>
+    </div>
   </div>
 </section>
 
