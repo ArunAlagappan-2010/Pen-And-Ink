@@ -267,32 +267,36 @@
 })();
 ['contextmenu','dragstart'].forEach(ev=>document.addEventListener(ev,e=>{if(e.target.tagName==='IMG')e.preventDefault();}));
 
-const G = 'assets/gallery/';
+const P = 'assets/projects/';
 const projects = [
-  { name:'Bespoke Residence',    type:'Architecture',  city:'Chennai',     year:'2024',
-    imgs:[G+'g01.jpg',G+'g01b.jpg',G+'g01c.jpg'] },
-  { name:'Studio Loft',          type:'Interiors',     city:'Bengaluru',   year:'2023',
-    imgs:[G+'g02.jpg',G+'g02b.jpg',G+'g02c.jpg'] },
-  { name:'The Terraced House',   type:'Architecture',  city:'Mumbai',      year:'2024',
-    imgs:[G+'g03.jpg',G+'g03b.jpg',G+'g03c.jpg'] },
-  { name:'Garden Pavilion',      type:'Urbanism',      city:'Coimbatore',  year:'2023',
-    imgs:[G+'g04.jpg',G+'g04b.jpg',G+'g04c.jpg'] },
-  { name:'The Atelier',          type:'Interiors',     city:'Chennai',     year:'2023',
-    imgs:[G+'g05.jpg',G+'g05b.jpg',G+'g05c.jpg'] },
-  { name:'Coastal Retreat',      type:'Architecture',  city:'Pondicherry', year:'2023',
-    imgs:[G+'g06.jpg',G+'g06b.jpg',G+'g06c.jpg'] },
-  { name:'The Urban Loft',       type:'Interiors',     city:'Bengaluru',   year:'2024',
-    imgs:[G+'g07.jpg',G+'g07b.jpg',G+'g07c.jpg'] },
-  { name:'Heritage Villa',       type:'Architecture',  city:'Chennai',     year:'2022',
-    imgs:[G+'g08.jpg',G+'g08b.jpg',G+'g08c.jpg'] },
-  { name:'The Skyhouse',         type:'Architecture',  city:'Mumbai',      year:'2023',
-    imgs:[G+'g09.jpg',G+'g09b.jpg',G+'g09c.jpg'] },
-  { name:'Riverside Studio',     type:'Interiors',     city:'Kochi',       year:'2024',
-    imgs:[G+'g10.jpg',G+'g10b.jpg',G+'g10c.jpg'] },
-  { name:"The Collector's Home", type:'Architecture',  city:'Hyderabad',   year:'2023',
-    imgs:[G+'g11.jpg',G+'g11b.jpg',G+'g11c.jpg'] },
-  { name:'Night Market Square',  type:'Urbanism',      city:'Chennai',     year:'2024',
-    imgs:[G+'g12.jpg',G+'g12b.jpg',G+'g12c.jpg'] },
+  { name:'Bishop Garden Residence', type:'Architecture',   city:'Chennai',    year:'2025',
+    imgs:[P+'bishop-garden/1.jpg',P+'bishop-garden/2.jpg'] },
+  { name:'The Kanathur Residence',  type:'Architecture',   city:'Kanathur',   year:'2026',
+    imgs:[P+'kanathur-residence/1.jpg',P+'kanathur-residence/2.jpg',P+'kanathur-residence/3.jpg',P+'kanathur-residence/4.jpg'] },
+  { name:'Utsav Banquet Hall',      type:'Interiors',      city:'Chennai',    year:'2026',
+    imgs:[P+'utsav-banquet-hall/1.jpg',P+'utsav-banquet-hall/2.jpg',P+'utsav-banquet-hall/3.jpg',P+'utsav-banquet-hall/4.jpg',P+'utsav-banquet-hall/5.jpg',P+'utsav-banquet-hall/6.jpg'] },
+  { name:'Institutional Campus',    type:'Institutional',  city:'Chennai',    year:'2026',
+    imgs:[P+'institutional-campus/1.jpg',P+'institutional-campus/2.jpg',P+'institutional-campus/3.jpg',P+'institutional-campus/4.jpg',P+'institutional-campus/5.jpg',P+'institutional-campus/6.jpg',P+'institutional-campus/7.jpg',P+'institutional-campus/8.jpg',P+'institutional-campus/9.jpg'] },
+  { name:'Kumaran Sports Complex',  type:'Urbanism',       city:'Dindigul',   year:'2025',
+    imgs:[P+'kumaran-sports-complex/1.jpg'] },
+  { name:'Murali Villa',            type:'Architecture',   city:'Chennai',    year:'2025',
+    imgs:[P+'murali-villa/1.jpg',P+'murali-villa/2.jpg'] },
+  { name:'Padappai Residence',      type:'Architecture',   city:'Padappai',   year:'2026',
+    imgs:[P+'padappai-residence/1.jpg',P+'padappai-residence/2.jpg'] },
+  { name:'Palavakkam Padel Club',   type:'Interiors',      city:'Palavakkam', year:'2026',
+    imgs:[P+'palavakkam-padel/1.jpg',P+'palavakkam-padel/2.jpg',P+'palavakkam-padel/3.jpg',P+'palavakkam-padel/4.jpg',P+'palavakkam-padel/5.jpg'] },
+  { name:'Panaiyur Residence',      type:'Architecture',   city:'Panaiyur',   year:'2025',
+    imgs:[P+'panaiyur-residence/1.jpg',P+'panaiyur-residence/2.jpg',P+'panaiyur-residence/3.jpg',P+'panaiyur-residence/4.jpg',P+'panaiyur-residence/5.jpg',P+'panaiyur-residence/6.jpg',P+'panaiyur-residence/7.jpg',P+'panaiyur-residence/8.jpg',P+'panaiyur-residence/9.jpg',P+'panaiyur-residence/10.jpg',P+'panaiyur-residence/11.jpg',P+'panaiyur-residence/12.jpg',P+'panaiyur-residence/13.jpg'] },
+  { name:'Parisudh Eco Concepts',   type:'Architecture',   city:'SIPCOT',     year:'2025',
+    imgs:[P+'parisudh-eco-concepts/1.jpg'] },
+  { name:'Proposed Development',    type:'Architecture',   city:'Chennai',    year:'2026',
+    imgs:[P+'proposed-development/1.jpg',P+'proposed-development/2.jpg',P+'proposed-development/3.jpg',P+'proposed-development/4.jpg'] },
+  { name:'Ethereal Earth',          type:'Interiors',      city:'Bangalore',  year:'2025',
+    imgs:[P+'ethereal-earth/1.jpg',P+'ethereal-earth/2.jpg',P+'ethereal-earth/3.jpg',P+'ethereal-earth/4.jpg',P+'ethereal-earth/5.jpg',P+'ethereal-earth/6.jpg'] },
+  { name:'The QSR Pavilion',        type:'Commercial',     city:'Chennai',    year:'2025',
+    imgs:[P+'qsr-pavilion/1.jpg',P+'qsr-pavilion/2.jpg',P+'qsr-pavilion/3.jpg',P+'qsr-pavilion/4.jpg',P+'qsr-pavilion/5.jpg',P+'qsr-pavilion/6.jpg'] },
+  { name:'Rela Hospital',           type:'Institutional',  city:'Chromepet',  year:'2025',
+    imgs:[P+'rela-hospital/1.jpg',P+'rela-hospital/2.jpg',P+'rela-hospital/3.jpg',P+'rela-hospital/4.jpg'] },
 ];
 
 // ── Build grid ──
@@ -302,6 +306,7 @@ projects.forEach((p, pi) => {
   d.className = 'gi';
   d.innerHTML = `
     <img src="${p.imgs[0]}" alt="${p.name}" loading="lazy">
+    ${p.imgs.length > 1 ? `<div class="gi-badge">${p.imgs.length} photos</div>` : ''}
     <div class="gi-label"><span>${p.name}</span></div>`;
   d.addEventListener('click', () => openLb(pi, 0));
   gal.appendChild(d);
