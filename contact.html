@@ -73,8 +73,8 @@
   .hero-body{
     position:relative;z-index:2;
     text-align:center;
-    padding:0 clamp(24px,7vw,120px);
-    max-width:min(860px,92vw);
+    padding:0 clamp(16px,4vw,64px);
+    max-width:min(1200px,96vw);
   }
   .hero-tag{
     font-size:clamp(9px,.7vw,11px);letter-spacing:.28em;text-transform:uppercase;
@@ -82,11 +82,12 @@
   }
   .hero-promise{
     font-family:var(--display);font-style:normal;font-weight:600;
-    font-size:clamp(26px,4.6vw,72px);
-    color:#fff;line-height:1.9;text-align:center;text-transform:uppercase;
+    font-size:clamp(15px,3vw,44px);
+    color:#fff;line-height:1.5;text-align:center;text-transform:uppercase;
     text-shadow:0 2px 40px rgba(0,0,0,.6);
-    letter-spacing:.06em;
+    letter-spacing:.04em;
   }
+  .hero-promise span{display:block;white-space:nowrap}
   .hero-rule{
     width:44px;height:1px;background:var(--gold);opacity:.65;
     margin:clamp(22px,3.5vh,48px) auto 0;
@@ -256,7 +257,7 @@
     .burger{display:block}
     .brand img{height:36px}
     .hero{min-height:100svh}
-    .hero-promise{line-height:1.75}
+    .hero-promise{line-height:1.5}
     .studio,.form-wrap{padding-left:20px;padding-right:20px}
     .studio-info{grid-template-columns:repeat(2,minmax(0,1fr))}
     .form-row{grid-template-columns:1fr}
@@ -340,9 +341,9 @@
   <div class="hero-body">
     <p class="hero-tag">Our Promise</p>
     <p class="hero-promise">
-      Our work is born from curiosity.<br>
-      Shaped by discipline.<br>
-      Delivered with devotion.
+      <span>Our work is born from curiosity.</span>
+      <span>Shaped by discipline.</span>
+      <span>Delivered with devotion.</span>
     </p>
     <div class="hero-rule"></div>
   </div>
