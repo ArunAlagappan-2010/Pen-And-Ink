@@ -149,6 +149,16 @@
   .p-count{font-size:10px;letter-spacing:.14em;color:rgba(255,255,255,.38);
     min-width:30px;text-align:center}
 
+  /* ── SIDE ARROWS (left & right centre) ── */
+  .phil-side{position:fixed;top:50%;transform:translateY(-50%);z-index:55;
+    background:none;border:none;cursor:pointer;font-family:var(--display);
+    font-size:clamp(40px,5vw,76px);line-height:1;padding:10px 16px;
+    color:rgba(255,255,255,.5);text-shadow:0 2px 18px rgba(0,0,0,.55);
+    transition:color .25s,transform .2s;user-select:none}
+  .phil-side:hover{color:#fff;transform:translateY(-50%) scale(1.08)}
+  .phil-side.left{left:clamp(6px,2vw,30px)}
+  .phil-side.right{right:clamp(6px,2vw,30px)}
+
   @media(max-width:900px){
     .nav{padding:0 22px;height:70px;--nav-h:70px}
     .menu{display:none}.burger{display:block}
@@ -286,6 +296,9 @@
     <div class="g-rule"></div>
   </div>
 
+  <button class="phil-side left" id="ph-left" aria-label="Previous slide">&#8249;</button>
+  <button class="phil-side right" id="ph-right" aria-label="Next slide">&#8250;</button>
+
 </div>
 
 <!-- MOBILE MENU -->
@@ -340,6 +353,9 @@
   }
   document.getElementById('p-prev').addEventListener('click',()=>goTo(idx-1));
   document.getElementById('p-next').addEventListener('click',()=>goTo(idx+1));
+  // side arrows — user action overrides autoplay; goTo resets the 5s timer so auto resumes after 5s
+  document.getElementById('ph-left').addEventListener('click',()=>goTo(idx-1));
+  document.getElementById('ph-right').addEventListener('click',()=>goTo(idx+1));
   document.addEventListener('keydown',e=>{
     if(e.key==='ArrowRight')goTo(idx+1);
     if(e.key==='ArrowLeft')goTo(idx-1);
