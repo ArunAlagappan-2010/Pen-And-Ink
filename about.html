@@ -54,7 +54,7 @@
   .ov{position:absolute;inset:0}
 
   /* gold line + corner tag */
-  .g-rule{position:absolute;bottom:6px;left:48px;right:48px;height:1px;z-index:5;
+  .g-rule{position:absolute;bottom:0;left:48px;right:48px;height:1px;z-index:5;
     background:linear-gradient(90deg,transparent,var(--gold) 14%,var(--gold) 86%,transparent);
     opacity:.55}
   .c-lbl{position:absolute;bottom:22px;right:52px;z-index:5;display:flex;
@@ -85,7 +85,7 @@
   .t-headline{
     font-family:var(--display);font-style:normal;font-weight:600;
     font-size:clamp(32px,3.9vw,62px);letter-spacing:.01em;line-height:1.16;
-    color:#fff;text-shadow:0 2px 28px rgba(0,0,0,.65)}
+    color:#fff;text-shadow:0 2px 28px rgba(0,0,0,.65);text-wrap:balance}
   .t-caps{
     font-size:clamp(13px,1.1vw,16px);font-weight:500;letter-spacing:.2em;text-transform:uppercase;
     color:rgba(255,255,255,.82);line-height:1.85;
@@ -134,11 +134,6 @@
   #ps5 .bg{background-image:url('assets/philosophy/p5.jpg');filter:grayscale(1) brightness(.6)}
   #ps5 .ov{background:linear-gradient(to top,rgba(0,0,0,.86) 0%,rgba(0,0,0,.5) 50%,rgba(0,0,0,.14) 100%)}
 
-  /* ── PROGRESS BAR ── */
-  .prog{position:fixed;bottom:0;left:0;height:2px;background:var(--gold);
-    z-index:50;opacity:.55;width:0;transition:none}
-  .prog.run{transition:width 5s linear}
-
   /* ── NAV ARROWS ── */
   .phil-nav{position:fixed;bottom:32px;left:50%;transform:translateX(-50%);
     z-index:50;display:flex;align-items:center;gap:22px}
@@ -165,7 +160,7 @@
     .brand img{height:44px}
     .ct{padding:calc(70px + 20px) 24px 80px}
     .box{width:100%}
-    .g-rule,.phil-nav,.prog{display:none!important}
+    .g-rule,.phil-nav{display:none!important}
     .phil-side{top:auto;bottom:16px;transform:none;font-size:32px;padding:8px 14px;
       background:rgba(0,0,0,.28);border-radius:3px}
     .phil-side:hover{transform:none}
@@ -318,8 +313,6 @@
   </nav>
 </div>
 
-<div class="prog" id="prog"></div>
-
 <div class="phil-nav">
   <button class="p-arr" id="p-prev">&#8249;</button>
   <span class="p-count"><span id="p-cur">1</span>&thinsp;/&thinsp;5</span>
@@ -337,23 +330,14 @@
 
   const slides = [...document.querySelectorAll('.ps')];
   const curEl  = document.getElementById('p-cur');
-  const prog   = document.getElementById('prog');
   const DURATION = 8000;
   let idx = 0, timer = null;
 
-  function resetProg(){
-    prog.classList.remove('run');
-    prog.style.width='0%';
-    void prog.offsetWidth;
-    prog.classList.add('run');
-    prog.style.width='100%';
-  }
   function goTo(n){
     slides[idx].classList.remove('on');
     idx=(n+slides.length)%slides.length;
     slides[idx].classList.add('on');
     curEl.textContent=idx+1;
-    resetProg();
     clearInterval(timer);
     timer=setInterval(()=>goTo(idx+1),DURATION);
   }
@@ -367,9 +351,8 @@
     if(e.key==='ArrowLeft')goTo(idx-1);
   });
   const phil=document.getElementById('phil');
-  phil.addEventListener('mouseenter',()=>{clearInterval(timer);prog.classList.remove('run');});
-  phil.addEventListener('mouseleave',()=>{resetProg();timer=setInterval(()=>goTo(idx+1),DURATION);});
-  resetProg();
+  phil.addEventListener('mouseenter',()=>{clearInterval(timer);});
+  phil.addEventListener('mouseleave',()=>{timer=setInterval(()=>goTo(idx+1),DURATION);});
   timer=setInterval(()=>goTo(idx+1),DURATION);
 </script>
 </body>
