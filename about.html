@@ -165,6 +165,7 @@
     .brand img{height:44px}
     .ct{padding:calc(70px + 20px) 24px 80px}
     .box{width:100%}
+    .g-rule,.phil-nav,.prog{display:none!important}
   }
 
   /* ── MOBILE MENU OVERLAY ── */
@@ -187,7 +188,6 @@
   .mob-rule{width:40px;height:1px;background:var(--gold);opacity:.5;margin:18px auto}
   .mob-logo{padding:0!important}
   .mob-logo img{height:64px;width:auto;margin-bottom:10px;filter:drop-shadow(0 1px 6px rgba(0,0,0,.5))}
-  .g-rule,.phil-nav,.prog{display:none!important}
   /* keep navbar fonts as-is */
   .menu a,.burger{font-family:'SF Pro Display','Helvetica Neue','Segoe UI',Arial,sans-serif}
   .mob-links a{font-family:'Cormorant Garamond',serif}
@@ -335,7 +335,7 @@
   const slides = [...document.querySelectorAll('.ps')];
   const curEl  = document.getElementById('p-cur');
   const prog   = document.getElementById('prog');
-  const DURATION = 5000;
+  const DURATION = 8000;
   let idx = 0, timer = null;
 
   function resetProg(){
