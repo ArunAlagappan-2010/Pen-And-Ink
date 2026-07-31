@@ -64,20 +64,18 @@
     line-height:.9;color:rgba(200,165,80,.95);text-shadow:0 2px 18px rgba(0,0,0,.5)}
 
   /* ── UNIVERSAL CONTENT FRAME ──
-     CSS grid: one cell, place-items centers the .box perfectly.
-     .ct-mid  → vertically + horizontally centred
-     .ct-bot  → pinned to bottom, horizontally centred          */
-  .ct{position:absolute;inset:0;z-index:3;display:grid;
-    padding:calc(var(--nav-h) + 40px) 64px 88px}
-  .ct-mid{place-items:center}
-  .ct-bot{align-items:center;justify-items:center}
+     Bottom-left anchored: generous negative space above, text
+     grounded in the lower third, asymmetric rather than centred.   */
+  .ct{position:absolute;inset:0;z-index:3;display:flex;
+    align-items:flex-end;justify-content:flex-start;
+    padding:calc(var(--nav-h) + 40px) 64px 92px}
 
   /* ── UNIVERSAL TEXT BOX ──
-     Single element, exact width, text always centred.           */
+     Single element, tighter measure, left-aligned.                */
   .box{
-    width:780px;
-    max-width:calc(100% - 0px); /* flex with padding already set on .ct */
-    text-align:center;
+    width:640px;
+    max-width:100%;
+    text-align:left;
   }
   .box > * + *{margin-top:22px}
 
@@ -93,7 +91,7 @@
     line-height:1.7;text-shadow:0 1px 8px rgba(0,0,0,.55)}
   .t-divider{
     display:block;width:44px;height:1px;background:var(--gold);
-    opacity:.7;margin:0 auto}
+    opacity:.7;margin:0}
 
   /* section blocks inside box (slides 3 & 4) */
   .section{margin-top:32px}
@@ -105,7 +103,7 @@
   #ps1 .ov{background:linear-gradient(to top,rgba(0,0,0,.88) 0%,rgba(0,0,0,.2) 55%,rgba(0,0,0,0) 100%)}
 
   #ps2 .bg{background-image:url('assets/philosophy/p2.jpg')}
-  #ps2 .ov{background:rgba(0,0,0,.52)}
+  #ps2 .ov{background:linear-gradient(to top,rgba(0,0,0,.8) 0%,rgba(0,0,0,.4) 50%,rgba(0,0,0,.16) 100%)}
 
   #ps3 .bg{background-image:url('assets/philosophy/p3.jpg');filter:grayscale(1) brightness(.68)}
   #ps3 .ov{background:linear-gradient(to top,rgba(0,0,0,.78) 0%,rgba(0,0,0,.42) 50%,rgba(0,0,0,.2) 100%)}
@@ -126,26 +124,13 @@
   .p-count{font-size:10px;letter-spacing:.14em;color:rgba(255,255,255,.38);
     min-width:30px;text-align:center}
 
-  /* ── SIDE ARROWS (left & right centre) ── */
-  .phil-side{position:fixed;top:50%;transform:translateY(-50%);z-index:55;
-    background:none;border:none;cursor:pointer;font-family:var(--display);
-    font-size:clamp(40px,5vw,76px);line-height:1;padding:10px 16px;
-    color:rgba(255,255,255,.5);text-shadow:0 2px 18px rgba(0,0,0,.55);
-    transition:color .25s,transform .2s;user-select:none}
-  .phil-side:hover{color:#fff;transform:translateY(-50%) scale(1.08)}
-  .phil-side.left{left:clamp(6px,2vw,30px)}
-  .phil-side.right{right:clamp(6px,2vw,30px)}
-
   @media(max-width:900px){
     .nav{padding:0 22px;height:70px;--nav-h:70px}
     .menu{display:none}.burger{display:block}
     .brand img{height:44px}
     .ct{padding:calc(70px + 20px) 24px 80px}
     .box{width:100%}
-    .g-rule,.phil-nav{display:none!important}
-    .phil-side{top:auto;bottom:16px;transform:none;font-size:32px;padding:8px 14px;
-      background:rgba(0,0,0,.28);border-radius:3px}
-    .phil-side:hover{transform:none}
+    .g-rule{display:none!important}
   }
 
   /* ── MOBILE MENU OVERLAY ── */
@@ -193,7 +178,7 @@
   <div class="ps on" id="ps1">
     <div class="bg"></div>
     <div class="ov"></div>
-    <div class="ct ct-bot">
+    <div class="ct">
       <div class="box">
         <h2 class="t-headline">Every Space Has a Pulse.&ensp;Every Building Has a Voice.</h2>
         <p class="t-caps">At Pen and Ink, we listen — to the whisper of light, the geometry of silence, the rhythm of human movement.</p>
@@ -208,7 +193,7 @@
   <div class="ps" id="ps2">
     <div class="bg"></div>
     <div class="ov"></div>
-    <div class="ct ct-mid">
+    <div class="ct">
       <div class="box">
         <p class="t-quote">We exist to craft spaces that feel like belonging. That invite conversation, contemplation, and connection. That elevate the ordinary into the remarkable.</p>
         <span class="t-divider"></span>
@@ -223,7 +208,7 @@
   <div class="ps" id="ps3">
     <div class="bg"></div>
     <div class="ov"></div>
-    <div class="ct ct-mid">
+    <div class="ct">
       <div class="box">
         <div class="section">
           <h3 class="t-section-head">Imagination</h3>
@@ -247,7 +232,7 @@
   <div class="ps" id="ps4">
     <div class="bg"></div>
     <div class="ov"></div>
-    <div class="ct ct-mid">
+    <div class="ct">
       <div class="box">
         <div class="section">
           <h3 class="t-section-head">Architecture</h3>
@@ -267,7 +252,7 @@
   <div class="ps" id="ps5">
     <div class="bg"></div>
     <div class="ov"></div>
-    <div class="ct ct-bot">
+    <div class="ct">
       <div class="box">
         <p class="t-body">Founded in 2025, our practice was built on a shared vision between three seasoned professionals — Karthik, Vandana, and Vijay — who bring together over 18 years of individual experience across architecture, engineering, and design.</p>
         <p class="t-body">With a strong foundation in both technical precision and creative thinking, the studio reflects a balanced approach to the built environment. Karthik, with a background in mechanical engineering, contributes a systems-driven perspective that enhances efficiency, performance, and innovation within every project.</p>
@@ -279,8 +264,6 @@
     <div class="g-rule"></div>
   </div>
 
-  <button class="phil-side left" id="ph-left" aria-label="Previous slide">&#8249;</button>
-  <button class="phil-side right" id="ph-right" aria-label="Next slide">&#8250;</button>
 
 </div>
 
@@ -325,9 +308,6 @@
   }
   document.getElementById('p-prev').addEventListener('click',()=>goTo(idx-1));
   document.getElementById('p-next').addEventListener('click',()=>goTo(idx+1));
-  // side arrows — user action overrides autoplay; goTo resets the 5s timer so auto resumes after 5s
-  document.getElementById('ph-left').addEventListener('click',()=>goTo(idx-1));
-  document.getElementById('ph-right').addEventListener('click',()=>goTo(idx+1));
   document.addEventListener('keydown',e=>{
     if(e.key==='ArrowRight')goTo(idx+1);
     if(e.key==='ArrowLeft')goTo(idx-1);
